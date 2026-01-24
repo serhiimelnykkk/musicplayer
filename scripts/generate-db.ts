@@ -1,8 +1,13 @@
 import { faker } from "@faker-js/faker";
 import fs from "fs";
 import { type Song } from "../src/types";
+import { parseFile } from "music-metadata";
 
-const createSong = (filePath: string): Song => {
+const createSong = async (filePath: string): Promise<Song> => {
+  const metadata = await parseFile(filePath);
+
+  const duration = metadata.format.duration || 0;
+
   const song: Song = {
     albumCover: faker.image.urlPicsumPhotos({ width: 128, height: 128 }),
     albumName: faker.music.album(),
@@ -10,21 +15,25 @@ const createSong = (filePath: string): Song => {
     filePath: filePath,
     genre: faker.music.genre(),
     title: faker.music.songName(),
+    duration: duration,
   };
 
   return song;
 };
 
-const songsFolderPath = "./public/music";
-const songsPaths = fs.readdirSync(songsFolderPath);
-const songs: Song[] = [];
+const generateDb = async () => {
+  const songsFolderPath = "./public/music";
+  const songsPaths = fs.readdirSync(songsFolderPath);
 
-for (let i = 0; i < songsPaths.length; i++) {
-  const songPath = `${songsFolderPath}/${songsPaths[i]}`;
-  const song = createSong(songPath);
-  songs.push(song);
-}
+  const promises = songsPaths.map((path) =>
+    createSong(`${songsFolderPath}/${path}`),
+  );
 
-const db = { songs };
+  const songs = await Promise.all(promises);
 
-fs.writeFileSync("db.json", JSON.stringify(db, null, 2));
+  const db = { songs };
+
+  fs.writeFileSync("db.json", JSON.stringify(db, null, 2));
+};
+
+generateDb();

@@ -5,4 +5,5 @@ export interface Song {
   filePath: string;
   genre: string;
   title: string;
+  duration: number;
 }
