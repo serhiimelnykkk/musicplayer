@@ -1,12 +1,14 @@
 import { type Song as SongType } from "@/types";
-import { Howl } from "howler";
-import { useState, useMemo, useEffect } from "react";
 
 interface Props {
   song: SongType;
 }
 
 export const Song = ({ song }: Props) => {
+  const minutes = Math.floor(song.duration / 60);
+  const seconds = Math.floor(song.duration % 60);
+  const duration = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+
   return (
     <div>
       <img src={song.albumCover} alt={`${song.title}'s album cover`} />
@@ -14,7 +16,7 @@ export const Song = ({ song }: Props) => {
       <span>{song.artist}</span>
       <span>{song.albumName}</span>
       <span>{song.genre}</span>
-      <span>{song.duration}</span>
+      <span>{duration}</span>
     </div>
   );
 };
