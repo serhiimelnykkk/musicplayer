@@ -9,7 +9,7 @@ const createSong = async (filePath: string): Promise<Song> => {
   const duration = metadata.format.duration || 0;
 
   const song: Song = {
-    albumCover: faker.image.urlPicsumPhotos({ width: 128, height: 128 }),
+    albumCover: faker.image.urlPicsumPhotos({ width: 64, height: 64 }),
     albumName: faker.music.album(),
     artist: faker.music.artist(),
     filePath: filePath,
