@@ -1,3 +1,9 @@
+import { SongsList } from "@/components/SongsList/SongsList";
+
 export const App = () => {
-  return <div>App</div>;
+  return (
+    <div>
+      <SongsList />
+    </div>
+  );
 };
