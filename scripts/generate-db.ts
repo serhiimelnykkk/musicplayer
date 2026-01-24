@@ -20,7 +20,8 @@ const songsPaths = fs.readdirSync(songsFolderPath);
 const songs: Song[] = [];
 
 for (let i = 0; i < songsPaths.length; i++) {
-  const song = createSong(songsPaths[i]);
+  const songPath = `${songsFolderPath}/${songsPaths[i]}`;
+  const song = createSong(songPath);
   songs.push(song);
 }
 
