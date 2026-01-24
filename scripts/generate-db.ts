@@ -1,15 +1,6 @@
 import { faker } from "@faker-js/faker";
 import fs from "fs";
-import { Howl } from "howler";
-
-interface Song {
-  albumCover: string;
-  albumName: string;
-  artist: string;
-  filePath: string;
-  genre: string;
-  title: string;
-}
+import { type Song } from "../src/types";
 
 const createSong = (filePath: string): Song => {
   const song: Song = {
