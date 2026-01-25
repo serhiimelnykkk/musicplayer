@@ -14,6 +14,10 @@ export const SongsList = () => {
       .then((data) => setSongs(data));
   }, []);
 
+  const handlePlayingSongChange = (songId: SongType["id"]) => {
+    songId === playingSong ? setPlayingSong("") : setPlayingSong(songId);
+  };
+
   return (
     <ul className="list-none">
       {songs.map((song) => (
@@ -21,7 +25,7 @@ export const SongsList = () => {
           key={song.id}
           song={song}
           isPlaying={song.id === playingSong}
-          setPlayingSong={setPlayingSong}
+          handlePlayingSongChange={handlePlayingSongChange}
         />
       ))}
     </ul>
