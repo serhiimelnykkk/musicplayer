@@ -16,7 +16,7 @@ export const SongsList = () => {
   return (
     <ul className="list-none">
       {songs.map((song) => (
-        <Song song={song} />
+        <Song key={song.id} song={song} />
       ))}
     </ul>
   );
