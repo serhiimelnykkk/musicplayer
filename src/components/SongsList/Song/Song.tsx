@@ -1,5 +1,6 @@
 import { type Song as SongType } from "@/types";
 import { Play } from "lucide-react";
+import { memo } from "react";
 
 interface Props {
   song: SongType;
@@ -7,13 +8,12 @@ interface Props {
   setPlayingSong: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const Song = ({ song, isPlaying, setPlayingSong }: Props) => {
+export const Song = memo(({ song, isPlaying, setPlayingSong }: Props) => {
   const minutes = Math.floor(song.duration / 60);
   const seconds = Math.floor(song.duration % 60);
   const duration = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
   const handlePlayClick = () => {
-    console.log(isPlaying);
     setPlayingSong(song.id);
   };
 
@@ -50,4 +50,4 @@ export const Song = ({ song, isPlaying, setPlayingSong }: Props) => {
       </div>
     </li>
   );
-};
+});

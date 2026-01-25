@@ -24,7 +24,6 @@ export const SongsList = () => {
           setPlayingSong={setPlayingSong}
         />
       ))}
-      =
     </ul>
   );
 };
