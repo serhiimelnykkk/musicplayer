@@ -3,17 +3,26 @@ import { Play } from "lucide-react";
 
 interface Props {
   song: SongType;
+  isPlaying: boolean;
+  setPlayingSong: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const Song = ({ song }: Props) => {
+export const Song = ({ song, isPlaying, setPlayingSong }: Props) => {
   const minutes = Math.floor(song.duration / 60);
   const seconds = Math.floor(song.duration % 60);
   const duration = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
+  const handlePlayClick = () => {
+    console.log(isPlaying);
+    setPlayingSong(song.id);
+  };
+
   return (
-    <li className="flex group font-semibold gap-4 p-4 bg-neutral-900 text-neutral-100 border-b border-neutral-700">
+    <li
+      className={`flex group font-semibold gap-4 p-4 bg-neutral-900 text-neutral-100 border-b border-neutral-700`}
+    >
       <div className="size-16">
-        <button className="relative">
+        <button className="relative" onClick={handlePlayClick}>
           <img
             src={song.albumCover}
             alt={`${song.title}'s album cover`}
@@ -27,7 +36,9 @@ export const Song = ({ song }: Props) => {
       </div>
       <div className="grid grid-cols-4 gap-4 flex-1 items-center">
         <div className="flex flex-col self-stretch">
-          <span className="text-lg flex-1 font-bold overflow-hidden whitespace-nowrap text-ellipsis">
+          <span
+            className={`${isPlaying ? "text-green-500" : "group-hover:text-teal-500"} transition-colors duration-200 text-lg flex-1 font-bold overflow-hidden whitespace-nowrap text-ellipsis`}
+          >
             {song.title}
           </span>
           <span className="text-sm text-neutral-500">{song.artist}</span>
