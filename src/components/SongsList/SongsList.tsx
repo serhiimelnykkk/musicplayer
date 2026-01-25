@@ -14,10 +14,10 @@ export const SongsList = () => {
   }, []);
 
   return (
-    <section>
+    <ul className="list-none">
       {songs.map((song) => (
         <Song song={song} />
       ))}
-    </section>
+    </ul>
   );
 };

@@ -10,13 +10,27 @@ export const Song = ({ song }: Props) => {
   const duration = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
   return (
-    <div>
-      <img src={song.albumCover} alt={`${song.title}'s album cover`} />
-      <span>{song.title}</span>
-      <span>{song.artist}</span>
-      <span>{song.albumName}</span>
-      <span>{song.genre}</span>
-      <span>{duration}</span>
-    </div>
+    <li className="flex font-semibold gap-4 p-4 bg-neutral-900 text-neutral-100 border-b border-neutral-700">
+      <img
+        src={song.albumCover}
+        alt={`${song.title}'s album cover`}
+        width={64}
+        height={64}
+        className="size-16 object-cover rounded-sm"
+        loading="lazy"
+      />
+      <div className="grid grid-cols-4 gap-4 flex-1 items-center">
+        <div className="flex flex-col self-stretch">
+          <span className="text-lg flex-1 font-bold overflow-hidden whitespace-nowrap text-ellipsis">
+            {song.title}
+          </span>
+          <span className="text-sm text-neutral-500">{song.artist}</span>
+        </div>
+
+        <span>{song.albumName}</span>
+        <span>{song.genre}</span>
+        <span className="justify-self-end">{duration}</span>
+      </div>
+    </li>
   );
 };
