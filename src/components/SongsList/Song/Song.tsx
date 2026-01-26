@@ -1,8 +1,9 @@
 import { useCurrentSong } from "@/context/CurrentSongContext/CurrentSongContext";
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
+import { useIsPlaying } from "@/context/IsPlayingContext/IsPlayingContext";
 import { type Song as SongType } from "@/types";
 import { Pause, Play } from "lucide-react";
-import { memo, useState } from "react";
+import { memo } from "react";
 
 interface Props {
   song: SongType;
@@ -20,10 +21,8 @@ const durationToViewString = (initialDuration: number) => {
 export const Song = memo(({ song, isActive }: Props) => {
   const howlRef = useHowl();
   const { setCurrentSongId } = useCurrentSong();
-
   const duration = durationToViewString(song.duration);
-
-  const [isPlaying, setIsPlaying] = useState(true);
+  const { isPlaying, setIsPlaying } = useIsPlaying();
 
   const handlePlayClick = () => {
     if (howlRef.current && isActive) {
