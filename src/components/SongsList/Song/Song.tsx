@@ -1,21 +1,36 @@
 import { type Song as SongType } from "@/types";
 import { Pause, Play } from "lucide-react";
-import { memo } from "react";
+import { memo, useState } from "react";
 
 interface Props {
   song: SongType;
-  isPlaying: boolean;
-  handlePlayingSongChange: (songId: string) => void;
+  isActive: boolean;
+  setCurrentSongId: React.Dispatch<React.SetStateAction<string>>;
+  howlRef: React.RefObject<Howl | null>;
 }
 
 export const Song = memo(
-  ({ song, isPlaying, handlePlayingSongChange }: Props) => {
+  ({ song, isActive, setCurrentSongId, howlRef }: Props) => {
     const minutes = Math.floor(song.duration / 60);
     const seconds = Math.floor(song.duration % 60);
     const duration = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
+    const [isPlaying, setIsPlaying] = useState(true);
+
     const handlePlayClick = () => {
-      handlePlayingSongChange(song.id);
+      if (howlRef.current && isActive) {
+        const playing = howlRef.current.playing();
+        if (playing) {
+          howlRef.current.pause();
+        } else {
+          howlRef.current.play();
+        }
+        setIsPlaying(!playing);
+      }
+      if (!isActive) {
+        setIsPlaying(true);
+      }
+      setCurrentSongId(song.id);
     };
 
     return (
@@ -33,14 +48,14 @@ export const Song = memo(
               loading="lazy"
             />
             <div className="absolute top-[50%] left-[50%] -translate-[50%] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              {isPlaying ? <Pause /> : <Play />}
+              {isPlaying && isActive ? <Pause /> : <Play />}
             </div>
           </button>
         </div>
         <div className="grid grid-cols-4 gap-4 flex-1 items-center">
           <div className="flex flex-col self-stretch">
             <span
-              className={`${isPlaying ? "text-green-500" : "group-hover:text-teal-500"} transition-colors duration-200 text-lg flex-1 font-bold overflow-hidden whitespace-nowrap text-ellipsis`}
+              className={`${isActive ? "text-green-500" : "group-hover:text-teal-500"} transition-colors duration-200 text-lg flex-1 font-bold overflow-hidden whitespace-nowrap text-ellipsis`}
             >
               {song.title}
             </span>
