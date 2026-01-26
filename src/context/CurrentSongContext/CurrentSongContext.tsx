@@ -1,8 +1,8 @@
 import { createContext, useContext } from "react";
 
 interface ContextValue {
-  currentSongId: string;
-  setCurrentSongId: React.Dispatch<React.SetStateAction<string>>;
+  currentSongId: string | null;
+  setCurrentSongId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export const CurrentSongContext = createContext<ContextValue | null>(null);

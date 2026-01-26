@@ -1,6 +1,6 @@
 import { useCurrentSong } from "@/context/CurrentSongContext/CurrentSongContext";
-import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
+import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useEffect } from "react";
 
 export const useHowlCycle = () => {
@@ -9,7 +9,7 @@ export const useHowlCycle = () => {
   const howlRef = useHowl();
 
   useEffect(() => {
-    if (currentSongId === "") return;
+    if (!currentSongId) return;
 
     const songPath = songs.filter((song) => song.id === currentSongId)[0]
       .filePath;
@@ -22,7 +22,7 @@ export const useHowlCycle = () => {
     });
 
     howl.on("end", () => {
-      setCurrentSongId("");
+      setCurrentSongId(null);
     });
 
     return () => {

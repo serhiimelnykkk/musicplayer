@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const CurrentSongProvider = ({ children }: Props) => {
-  const [currentSongId, setCurrentSongId] = useState<Song["id"]>("");
+  const [currentSongId, setCurrentSongId] = useState<Song["id"] | null>(null);
 
   const value = useMemo(() => {
     return { currentSongId, setCurrentSongId };
