@@ -6,7 +6,7 @@ import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 
 export const Player = () => {
   const { songs } = useSongs();
-  const { currentSongId } = useCurrentSong();
+  const { currentSongId, setCurrentSongId } = useCurrentSong();
   const { isPlaying, setIsPlaying } = useIsPlaying();
   const howlRef = useHowl();
 
@@ -23,6 +23,34 @@ export const Player = () => {
         howlRef.current.play();
       }
       setIsPlaying(!playing);
+    }
+  };
+
+  const handleSkipBackClick = () => {
+    if (!currentSong) {
+      return;
+    }
+    const index = songs.indexOf(currentSong);
+    if (index === 0) {
+      const nextSong = songs[songs.length - 1];
+      setCurrentSongId(nextSong.id);
+    } else {
+      const nextSong = songs[index - 1];
+      setCurrentSongId(nextSong.id);
+    }
+  };
+
+  const handleSkipForwardClick = () => {
+    if (!currentSong) {
+      return;
+    }
+    const index = songs.indexOf(currentSong);
+    if (index === songs.length - 1) {
+      const nextSong = songs[0];
+      setCurrentSongId(nextSong.id);
+    } else {
+      const nextSong = songs[index + 1];
+      setCurrentSongId(nextSong.id);
     }
   };
 
@@ -45,13 +73,13 @@ export const Player = () => {
         </div>
       </div>
       <div className="flex justify-self-center gap-4">
-        <button>
+        <button onClick={handleSkipBackClick}>
           <SkipBack size={20} />
         </button>
         <button onClick={handlePlayClick}>
           {isPlaying ? <Pause size={20} /> : <Play size={20} />}
         </button>
-        <button>
+        <button onClick={handleSkipForwardClick}>
           <SkipForward size={20} />
         </button>
       </div>
