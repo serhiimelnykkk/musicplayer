@@ -1,42 +1,12 @@
-import { useEffect, useRef, useState } from "react";
 import { Song } from "@/components/SongsList/Song/Song";
-import { type Song as SongType } from "@/types";
-import { Howl } from "howler";
-
-const url = "http://localhost:3000/songs";
+import { useCurrentSong } from "@/context/CurrentSongContext/CurrentSongContext";
+import { useIsPlaying } from "@/context/IsPlayingContext/IsPlayingContext";
+import { useSongs } from "@/context/SongsContext/SongsContext";
 
 export const SongsList = () => {
-  const [songs, setSongs] = useState<SongType[]>([]);
-  const [currentSongId, setCurrentSongId] = useState<SongType["id"]>("");
-  const howlRef = useRef<Howl | null>(null);
-
-  useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setSongs(data));
-  }, []);
-
-  useEffect(() => {
-    if (currentSongId === "") return;
-
-    const songPath = songs.filter((song) => song.id === currentSongId)[0]
-      .filePath;
-
-    const howl = new Howl({ src: songPath, html5: true });
-    howlRef.current = howl;
-
-    howl.once("load", () => {
-      howl.play();
-    });
-
-    howl.on("end", () => {
-      setCurrentSongId("");
-    });
-
-    return () => {
-      howl.unload();
-    };
-  }, [currentSongId, songs]);
+  const { songs } = useSongs();
+  const { currentSongId, setCurrentSongId } = useCurrentSong();
+  const { isPlaying } = useIsPlaying();
 
   return (
     <ul className="list-none">
@@ -45,7 +15,7 @@ export const SongsList = () => {
           key={song.id}
           song={song}
           isActive={song.id === currentSongId}
-          howlRef={howlRef}
+          isPlaying={isPlaying}
           setCurrentSongId={setCurrentSongId}
         />
       ))}
