@@ -7,7 +7,6 @@ interface Props {
   song: SongType;
   isActive: boolean;
   isPlaying: boolean;
-  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentSongId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
@@ -20,7 +19,7 @@ const durationToViewString = (initialDuration: number) => {
 };
 
 export const Song = memo(
-  ({ song, isActive, isPlaying, setIsPlaying, setCurrentSongId }: Props) => {
+  ({ song, isActive, isPlaying, setCurrentSongId }: Props) => {
     const howlRef = useHowl();
     const duration = durationToViewString(song.duration);
 
@@ -32,10 +31,6 @@ export const Song = memo(
         } else {
           howlRef.current.play();
         }
-        setIsPlaying(!playing);
-      }
-      if (!isActive) {
-        setIsPlaying(true);
       }
       setCurrentSongId(song.id);
     };

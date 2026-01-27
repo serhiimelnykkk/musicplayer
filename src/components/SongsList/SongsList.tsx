@@ -6,7 +6,7 @@ import { useSongs } from "@/context/SongsContext/SongsContext";
 export const SongsList = () => {
   const { songs } = useSongs();
   const { currentSongId, setCurrentSongId } = useCurrentSong();
-  const { isPlaying, setIsPlaying } = useIsPlaying();
+  const { isPlaying } = useIsPlaying();
 
   return (
     <ul className="list-none">
@@ -16,7 +16,6 @@ export const SongsList = () => {
           song={song}
           isActive={song.id === currentSongId}
           isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
           setCurrentSongId={setCurrentSongId}
         />
       ))}

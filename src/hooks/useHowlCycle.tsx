@@ -1,11 +1,13 @@
 import { useCurrentSong } from "@/context/CurrentSongContext/CurrentSongContext";
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
+import { useIsPlaying } from "@/context/IsPlayingContext/IsPlayingContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useEffect } from "react";
 
 export const useHowlCycle = () => {
   const { currentSongId, setCurrentSongId } = useCurrentSong();
   const { songs } = useSongs();
+  const { setIsPlaying } = useIsPlaying();
   const howlRef = useHowl();
 
   useEffect(() => {
@@ -19,6 +21,14 @@ export const useHowlCycle = () => {
 
     howl.once("load", () => {
       howl.play();
+    });
+
+    howl.on("play", () => {
+      setIsPlaying(true);
+    });
+
+    howl.on("pause", () => {
+      setIsPlaying(false);
     });
 
     howl.on("end", () => {

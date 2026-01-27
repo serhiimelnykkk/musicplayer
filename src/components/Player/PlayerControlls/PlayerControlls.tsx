@@ -7,7 +7,7 @@ import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 export const PlayerControlls = () => {
   const { songs } = useSongs();
   const { currentSongId, setCurrentSongId } = useCurrentSong();
-  const { isPlaying, setIsPlaying } = useIsPlaying();
+  const { isPlaying } = useIsPlaying();
   const howlRef = useHowl();
 
   const currentSong = currentSongId
@@ -22,7 +22,6 @@ export const PlayerControlls = () => {
       } else {
         howlRef.current.play();
       }
-      setIsPlaying(!playing);
     }
   };
 
