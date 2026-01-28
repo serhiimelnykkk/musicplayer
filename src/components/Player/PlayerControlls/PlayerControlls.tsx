@@ -2,13 +2,16 @@ import { useCurrentSong } from "@/context/CurrentSongContext/CurrentSongContext"
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
 import { useIsPlaying } from "@/context/IsPlayingContext/IsPlayingContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
-import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
+import { Pause, Play, Repeat, SkipBack, SkipForward } from "lucide-react";
+import { useState } from "react";
 
 export const PlayerControlls = () => {
   const { songs } = useSongs();
   const { currentSongId, setCurrentSongId } = useCurrentSong();
   const { isPlaying } = useIsPlaying();
   const howlRef = useHowl();
+
+  const [isLooping, setIsLooping] = useState(false);
 
   const currentSong = currentSongId
     ? songs.filter((song) => song.id === currentSongId)[0]
@@ -53,6 +56,14 @@ export const PlayerControlls = () => {
     }
   };
 
+  const handleLoopClick = () => {
+    if (howlRef.current) {
+      const currentLoopState = howlRef.current.loop();
+      howlRef.current.loop(!currentLoopState);
+      setIsLooping(!currentLoopState);
+    }
+  };
+
   return (
     <>
       <button onClick={handleSkipBackClick}>
@@ -63,6 +74,12 @@ export const PlayerControlls = () => {
       </button>
       <button onClick={handleSkipForwardClick}>
         <SkipForward size={20} />
+      </button>
+      <button
+        onClick={handleLoopClick}
+        className={`${isLooping ? "text-green-500" : ""}`}
+      >
+        <Repeat size={20} />
       </button>
     </>
   );
