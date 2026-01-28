@@ -5,7 +5,7 @@ import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useEffect } from "react";
 
 export const useHowlCycle = () => {
-  const { currentSongId, setCurrentSongId } = useCurrentSong();
+  const { currentSongId } = useCurrentSong();
   const { songs } = useSongs();
   const { setIsPlaying } = useIsPlaying();
   const howlRef = useHowl();
@@ -16,7 +16,20 @@ export const useHowlCycle = () => {
     const songPath = songs.filter((song) => song.id === currentSongId)[0]
       .filePath;
 
-    const howl = new Howl({ src: songPath, html5: true });
+    let howl = null;
+
+    if (howlRef.current) {
+      howl = new Howl({
+        src: songPath,
+        html5: true,
+        loop: howlRef.current.loop(),
+      });
+    } else {
+      howl = new Howl({
+        src: songPath,
+        html5: true,
+      });
+    }
     howlRef.current = howl;
 
     howl.once("load", () => {
@@ -29,10 +42,6 @@ export const useHowlCycle = () => {
 
     howl.on("pause", () => {
       setIsPlaying(false);
-    });
-
-    howl.on("end", () => {
-      setCurrentSongId(null);
     });
 
     return () => {
