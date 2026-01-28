@@ -77,7 +77,7 @@ export const PlayerControlls = () => {
       </button>
       <button
         onClick={handleLoopClick}
-        className={`${isLooping ? "text-green-500" : ""}`}
+        className={`${isLooping ? "text-green-500" : ""} transition-colors duration-200`}
       >
         <Repeat size={20} />
       </button>
