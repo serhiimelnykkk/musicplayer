@@ -8,7 +8,7 @@ export const Player = () => {
       <div className="flex gap-4">
         <PlayerSong />
       </div>
-      <div className="flex flex-col items-center justify-center justify-self-center gap-4">
+      <div className="flex flex-col items-center justify-center gap-4">
         <div className="flex gap-4">
           <PlayerControlls />
         </div>
