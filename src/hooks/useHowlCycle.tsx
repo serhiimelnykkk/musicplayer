@@ -5,7 +5,7 @@ import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useEffect } from "react";
 
 export const useHowlCycle = () => {
-  const { currentSongId } = useCurrentSong();
+  const { currentSongId, setCurrentSongId } = useCurrentSong();
   const { songs } = useSongs();
   const { setIsPlaying } = useIsPlaying();
   const howlRef = useHowl();
@@ -42,6 +42,22 @@ export const useHowlCycle = () => {
 
     howl.on("pause", () => {
       setIsPlaying(false);
+    });
+
+    // onEnd doesn't trigger when looping
+
+    howl.on("end", () => {
+      const currentSong = songs.find((song) => song.id === currentSongId);
+      if (currentSong) {
+        const currentSongIndex = songs.indexOf(currentSong);
+        let nextSong = null;
+        if (currentSongIndex === songs.length - 1) {
+          nextSong = songs[0];
+        } else {
+          nextSong = songs[currentSongIndex + 1];
+        }
+        setCurrentSongId(nextSong.id);
+      }
     });
 
     return () => {
