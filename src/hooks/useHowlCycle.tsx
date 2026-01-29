@@ -1,14 +1,16 @@
 import { useCurrentSong } from "@/context/CurrentSongContext/CurrentSongContext";
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
 import { useIsPlaying } from "@/context/IsPlayingContext/IsPlayingContext";
+import { useSeek } from "@/context/SeekContext/SeekContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useEffect } from "react";
 
 export const useHowlCycle = () => {
-  const { currentSongId, setCurrentSongId } = useCurrentSong();
+  const { currentSongId, setCurrentSongId, setDuration } = useCurrentSong();
   const { songs } = useSongs();
   const { setIsPlaying } = useIsPlaying();
   const howlRef = useHowl();
+  const { setCurrentPos } = useSeek();
 
   useEffect(() => {
     if (!currentSongId) return;
@@ -34,14 +36,20 @@ export const useHowlCycle = () => {
 
     howl.once("load", () => {
       howl.play();
+      setCurrentPos([0]);
     });
 
     howl.on("play", () => {
       setIsPlaying(true);
+      setDuration(howl.duration());
     });
 
     howl.on("pause", () => {
       setIsPlaying(false);
+    });
+
+    howl.on("seek", () => {
+      setCurrentPos([howl.seek()]);
     });
 
     // onEnd doesn't trigger when looping
