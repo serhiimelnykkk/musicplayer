@@ -1,5 +1,6 @@
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
 import { type Song as SongType } from "@/types";
+import { durationToViewString } from "@/util";
 import { Pause, Play } from "lucide-react";
 import { memo } from "react";
 
@@ -9,14 +10,6 @@ interface Props {
   isPlaying: boolean;
   setCurrentSongId: React.Dispatch<React.SetStateAction<string | null>>;
 }
-
-const durationToViewString = (initialDuration: number) => {
-  const minutes = Math.floor(initialDuration / 60);
-  const seconds = Math.floor(initialDuration % 60);
-  const duration = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-
-  return duration;
-};
 
 export const Song = memo(
   ({ song, isActive, isPlaying, setCurrentSongId }: Props) => {
