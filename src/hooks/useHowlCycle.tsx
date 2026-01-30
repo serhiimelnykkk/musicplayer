@@ -1,14 +1,22 @@
-import { useCurrentSong } from "@/context/CurrentSongContext/CurrentSongContext";
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
-import { useIsPlaying } from "@/context/IsPlayingContext/IsPlayingContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
-import { useEffect } from "react";
+import { useCurrentSong } from "@/store";
+import { useEffect, useRef } from "react";
+import { useShallow } from "zustand/shallow";
 
 export const useHowlCycle = () => {
-  const { currentSongId, setCurrentSongId } = useCurrentSong();
+  const { currentSongId, setState } = useCurrentSong(
+    useShallow((state) => ({
+      currentSongId: state.currentSongId,
+      setState: state.setState,
+    })),
+  );
+
   const { songs } = useSongs();
-  const { setIsPlaying } = useIsPlaying();
+
   const howlRef = useHowl();
+  const lastTimeRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!currentSongId) return;
@@ -30,18 +38,33 @@ export const useHowlCycle = () => {
         html5: true,
       });
     }
+
     howlRef.current = howl;
+
+    const step = () => {
+      const currentStep = Math.floor(howlRef.current?.seek() || 0);
+      if (currentStep !== lastTimeRef.current) {
+        setState({ currentPos: currentStep });
+      }
+      lastTimeRef.current = currentStep;
+      rafRef.current = requestAnimationFrame(step);
+    };
 
     howl.once("load", () => {
       howl.play();
+      setState({ currentPos: 0 });
     });
 
     howl.on("play", () => {
-      setIsPlaying(true);
+      setState({ duration: howl.duration(), isPlaying: true });
+      rafRef.current = requestAnimationFrame(step);
     });
 
     howl.on("pause", () => {
-      setIsPlaying(false);
+      setState({ isPlaying: false });
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     });
 
     // onEnd doesn't trigger when looping
@@ -56,12 +79,12 @@ export const useHowlCycle = () => {
         } else {
           nextSong = songs[currentSongIndex + 1];
         }
-        setCurrentSongId(nextSong.id);
+        setState({ currentSongId: nextSong.id });
       }
     });
 
     return () => {
       howl.unload();
     };
-  }, [currentSongId, songs]);
+  }, [currentSongId, songs, setState]);
 };
