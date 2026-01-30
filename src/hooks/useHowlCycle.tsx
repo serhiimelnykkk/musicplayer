@@ -3,7 +3,7 @@ import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
 import { useIsPlaying } from "@/context/IsPlayingContext/IsPlayingContext";
 import { useSeek } from "@/context/SeekContext/SeekContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export const useHowlCycle = () => {
   const { currentSongId, setCurrentSongId, setDuration } = useCurrentSong();
@@ -11,6 +11,8 @@ export const useHowlCycle = () => {
   const { setIsPlaying } = useIsPlaying();
   const howlRef = useHowl();
   const { setCurrentPos } = useSeek();
+  const lastTimeRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!currentSongId) return;
@@ -32,7 +34,18 @@ export const useHowlCycle = () => {
         html5: true,
       });
     }
+
     howlRef.current = howl;
+
+    const step = () => {
+      const currentStep = Math.floor(howlRef.current?.seek() || 0);
+      if (currentStep !== lastTimeRef.current) {
+        setCurrentPos([currentStep]);
+        console.log("update", currentStep, lastTimeRef.current);
+      }
+      lastTimeRef.current = currentStep;
+      rafRef.current = requestAnimationFrame(step);
+    };
 
     howl.once("load", () => {
       howl.play();
@@ -42,14 +55,14 @@ export const useHowlCycle = () => {
     howl.on("play", () => {
       setIsPlaying(true);
       setDuration(howl.duration());
+      rafRef.current = requestAnimationFrame(step);
     });
 
     howl.on("pause", () => {
       setIsPlaying(false);
-    });
-
-    howl.on("seek", () => {
-      setCurrentPos([howl.seek()]);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     });
 
     // onEnd doesn't trigger when looping

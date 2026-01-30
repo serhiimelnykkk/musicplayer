@@ -1,67 +1,39 @@
 import { useCurrentSong } from "@/context/CurrentSongContext/CurrentSongContext";
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
-import { useIsPlaying } from "@/context/IsPlayingContext/IsPlayingContext";
 import { useSeek } from "@/context/SeekContext/SeekContext";
 import { Range, Root, Thumb, Track } from "@radix-ui/react-slider";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 export const SongProgress = () => {
   const { currentSongId, duration } = useCurrentSong();
   const { currentPos, setCurrentPos } = useSeek();
-  const { isPlaying } = useIsPlaying();
   const howlRef = useHowl();
 
-  const intervalRef = useRef(0);
-
-  const restart = useCallback(() => {
-    clearInterval(intervalRef.current);
-    const intervalId = setInterval(
-      () =>
-        setCurrentPos((prev) => {
-          if (prev[0] >= duration - 1) {
-            clearInterval(intervalId);
-            return [0];
-          }
-          return [prev[0] + 1];
-        }),
-      1000,
-    );
-    intervalRef.current = intervalId;
-  }, [duration, setCurrentPos]);
+  const [sliderValue, setSliderValue] = useState([0]);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
-    if (isPlaying) {
-      restart();
-    } else {
-      clearInterval(intervalRef.current);
+    if (!isDragging) {
+      setSliderValue(currentPos);
     }
-  }, [isPlaying, restart]);
-
-  useEffect(() => {
-    if (!currentSongId) return;
-
-    restart();
-
-    return () => clearInterval(intervalRef.current);
-  }, [currentSongId, duration, restart]);
+  }, [currentPos, isDragging]);
 
   const handleValueChange = (value: number[]) => {
-    setCurrentPos(value);
-    clearInterval(intervalRef.current);
+    setSliderValue(value);
+    setIsDragging(true);
   };
 
   const handleValueCommit = (value: number[]) => {
     howlRef.current?.seek(value[0]);
-    if (isPlaying) {
-      restart();
-    }
+    setCurrentPos(value);
+    setIsDragging(false);
   };
 
   return (
     <Root
       disabled={currentSongId ? false : true}
       max={duration || 0}
-      value={currentPos}
+      value={sliderValue}
       onValueChange={(value) => handleValueChange(value)}
       onValueCommit={(value) => handleValueCommit(value)}
       className="relative flex items-center w-full h-1.5 group/root"
