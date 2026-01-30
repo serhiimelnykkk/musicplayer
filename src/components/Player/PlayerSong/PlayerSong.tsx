@@ -1,5 +1,5 @@
-import { useCurrentSong } from "@/context/CurrentSongContext/CurrentSongContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
+import { useCurrentSong } from "@/store";
 
 export const PlayerSong = () => {
   const { songs } = useSongs();

@@ -1,12 +1,10 @@
-import { useCurrentSong } from "@/context/CurrentSongContext/CurrentSongContext";
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
-import { useSeek } from "@/context/SeekContext/SeekContext";
+import { useCurrentSong } from "@/store";
 import { Range, Root, Thumb, Track } from "@radix-ui/react-slider";
 import { useEffect, useState } from "react";
 
 export const SongProgress = () => {
-  const { currentSongId, duration } = useCurrentSong();
-  const { currentPos, setCurrentPos } = useSeek();
+  const { currentSongId, duration, currentPos, setState } = useCurrentSong();
   const howlRef = useHowl();
 
   const [sliderValue, setSliderValue] = useState([0]);
@@ -25,7 +23,7 @@ export const SongProgress = () => {
 
   const handleValueCommit = (value: number[]) => {
     howlRef.current?.seek(value[0]);
-    setCurrentPos(value);
+    setState({ currentPos: value });
     setIsDragging(false);
   };
 

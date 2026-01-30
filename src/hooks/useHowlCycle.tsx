@@ -1,16 +1,13 @@
-import { useCurrentSong } from "@/context/CurrentSongContext/CurrentSongContext";
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
-import { useIsPlaying } from "@/context/IsPlayingContext/IsPlayingContext";
-import { useSeek } from "@/context/SeekContext/SeekContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
+import { useCurrentSong } from "@/store";
 import { useEffect, useRef } from "react";
 
 export const useHowlCycle = () => {
-  const { currentSongId, setCurrentSongId, setDuration } = useCurrentSong();
+  const { currentSongId, setState } = useCurrentSong();
   const { songs } = useSongs();
-  const { setIsPlaying } = useIsPlaying();
+
   const howlRef = useHowl();
-  const { setCurrentPos } = useSeek();
   const lastTimeRef = useRef(0);
   const rafRef = useRef<number | null>(null);
 
@@ -40,8 +37,7 @@ export const useHowlCycle = () => {
     const step = () => {
       const currentStep = Math.floor(howlRef.current?.seek() || 0);
       if (currentStep !== lastTimeRef.current) {
-        setCurrentPos([currentStep]);
-        console.log("update", currentStep, lastTimeRef.current);
+        setState({ currentPos: [currentStep] });
       }
       lastTimeRef.current = currentStep;
       rafRef.current = requestAnimationFrame(step);
@@ -49,17 +45,16 @@ export const useHowlCycle = () => {
 
     howl.once("load", () => {
       howl.play();
-      setCurrentPos([0]);
+      setState({ currentPos: [0] });
     });
 
     howl.on("play", () => {
-      setIsPlaying(true);
-      setDuration(howl.duration());
+      setState({ duration: howl.duration(), isPlaying: true });
       rafRef.current = requestAnimationFrame(step);
     });
 
     howl.on("pause", () => {
-      setIsPlaying(false);
+      setState({ isPlaying: false });
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
@@ -77,7 +72,7 @@ export const useHowlCycle = () => {
         } else {
           nextSong = songs[currentSongIndex + 1];
         }
-        setCurrentSongId(nextSong.id);
+        setState({ currentSongId: nextSong.id });
       }
     });
 
