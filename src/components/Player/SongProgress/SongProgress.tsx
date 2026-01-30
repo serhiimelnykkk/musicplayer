@@ -2,9 +2,17 @@ import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
 import { useCurrentSong } from "@/store";
 import { Range, Root, Thumb, Track } from "@radix-ui/react-slider";
 import { useEffect, useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 export const SongProgress = () => {
-  const { currentSongId, duration, currentPos, setState } = useCurrentSong();
+  const { currentSongId, duration, currentPos, setState } = useCurrentSong(
+    useShallow((state) => ({
+      currentSongId: state.currentSongId,
+      duration: state.duration,
+      currentPos: state.currentPos,
+      setState: state.setState,
+    })),
+  );
   const howlRef = useHowl();
 
   const [sliderValue, setSliderValue] = useState([0]);

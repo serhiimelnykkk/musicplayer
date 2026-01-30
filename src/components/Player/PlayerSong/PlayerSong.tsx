@@ -1,13 +1,16 @@
 import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useCurrentSong } from "@/store";
+import { useMemo } from "react";
 
 export const PlayerSong = () => {
   const { songs } = useSongs();
-  const { currentSongId } = useCurrentSong();
+  const currentSongId = useCurrentSong((state) => state.currentSongId);
 
-  const currentSong = currentSongId
-    ? songs.filter((song) => song.id === currentSongId)[0]
-    : null;
+  const currentSong = useMemo(() => {
+    return currentSongId
+      ? songs.find((song) => song.id === currentSongId)
+      : null;
+  }, [currentSongId, songs]);
 
   return (
     <>

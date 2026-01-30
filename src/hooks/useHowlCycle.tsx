@@ -2,9 +2,16 @@ import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useCurrentSong } from "@/store";
 import { useEffect, useRef } from "react";
+import { useShallow } from "zustand/shallow";
 
 export const useHowlCycle = () => {
-  const { currentSongId, setState } = useCurrentSong();
+  const { currentSongId, setState } = useCurrentSong(
+    useShallow((state) => ({
+      currentSongId: state.currentSongId,
+      setState: state.setState,
+    })),
+  );
+
   const { songs } = useSongs();
 
   const howlRef = useHowl();
@@ -79,5 +86,5 @@ export const useHowlCycle = () => {
     return () => {
       howl.unload();
     };
-  }, [currentSongId, songs]);
+  }, [currentSongId, songs, setState]);
 };

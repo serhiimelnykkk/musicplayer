@@ -3,10 +3,18 @@ import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useCurrentSong } from "@/store";
 import { Pause, Play, Repeat, SkipBack, SkipForward } from "lucide-react";
 import { useState } from "react";
+import { useShallow } from "zustand/shallow";
 
 export const PlayerControlls = () => {
   const { songs } = useSongs();
-  const { currentSongId, isPlaying, setState } = useCurrentSong();
+  const { currentSongId, isPlaying, setState } = useCurrentSong(
+    useShallow((state) => ({
+      currentSongId: state.currentSongId,
+      isPlaying: state.isPlaying,
+      setState: state.setState,
+    })),
+  );
+
   const howlRef = useHowl();
 
   const [isLooping, setIsLooping] = useState(false);

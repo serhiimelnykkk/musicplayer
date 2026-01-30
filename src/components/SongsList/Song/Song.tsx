@@ -4,13 +4,20 @@ import { type Song as SongType } from "@/types";
 import { durationToViewString } from "@/util";
 import { Pause, Play } from "lucide-react";
 import { memo } from "react";
+import { useShallow } from "zustand/shallow";
 
 interface Props {
   song: SongType;
 }
 
 export const Song = memo(({ song }: Props) => {
-  const { currentSongId, isPlaying, setState } = useCurrentSong();
+  const { currentSongId, isPlaying, setState } = useCurrentSong(
+    useShallow((state) => ({
+      currentSongId: state.currentSongId,
+      isPlaying: state.isPlaying,
+      setState: state.setState,
+    })),
+  );
   const isActive = song.id === currentSongId;
 
   const howlRef = useHowl();
