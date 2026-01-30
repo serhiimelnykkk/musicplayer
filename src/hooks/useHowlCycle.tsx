@@ -44,7 +44,7 @@ export const useHowlCycle = () => {
     const step = () => {
       const currentStep = Math.floor(howlRef.current?.seek() || 0);
       if (currentStep !== lastTimeRef.current) {
-        setState({ currentPos: [currentStep] });
+        setState({ currentPos: currentStep });
       }
       lastTimeRef.current = currentStep;
       rafRef.current = requestAnimationFrame(step);
@@ -52,7 +52,7 @@ export const useHowlCycle = () => {
 
     howl.once("load", () => {
       howl.play();
-      setState({ currentPos: [0] });
+      setState({ currentPos: 0 });
     });
 
     howl.on("play", () => {

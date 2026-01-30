@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import fs from "fs";
-import { type Song } from "../src/types";
 import { parseFile } from "music-metadata";
+import { type Song } from "../src/types";
 
 const createSong = async (filePath: string): Promise<Song> => {
   const metadata = await parseFile(filePath);

@@ -15,7 +15,7 @@ export const SongProgress = () => {
   );
   const howlRef = useHowl();
 
-  const [sliderValue, setSliderValue] = useState([0]);
+  const [sliderValue, setSliderValue] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
@@ -25,21 +25,21 @@ export const SongProgress = () => {
   }, [currentPos, isDragging]);
 
   const handleValueChange = (value: number[]) => {
-    setSliderValue(value);
+    setSliderValue(value[0]);
     setIsDragging(true);
   };
 
   const handleValueCommit = (value: number[]) => {
     howlRef.current?.seek(value[0]);
-    setState({ currentPos: value });
+    setState({ currentPos: value[0] });
     setIsDragging(false);
   };
 
   return (
     <Root
       disabled={currentSongId ? false : true}
-      max={duration || 0}
-      value={sliderValue}
+      max={duration}
+      value={[sliderValue]}
       onValueChange={(value) => handleValueChange(value)}
       onValueCommit={(value) => handleValueCommit(value)}
       className="relative flex items-center w-full h-1.5 group/root"

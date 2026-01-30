@@ -2,8 +2,8 @@ import { create } from "zustand";
 
 interface State {
   currentSongId: string | null;
-  duration: number | null;
-  currentPos: number[];
+  duration: number;
+  currentPos: number;
   isPlaying: boolean;
 }
 
@@ -13,8 +13,8 @@ interface Actions {
 
 export const useCurrentSong = create<State & Actions>((set) => ({
   currentSongId: null,
-  duration: null,
-  currentPos: [0],
+  duration: 0,
+  currentPos: 0,
   isPlaying: false,
 
   setState: (update) => set((state) => ({ ...state, ...update })),
