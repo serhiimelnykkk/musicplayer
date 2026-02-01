@@ -5,6 +5,7 @@ interface State {
   duration: number;
   currentPos: number;
   isPlaying: boolean;
+  volume: number;
 }
 
 interface Actions {
@@ -16,6 +17,7 @@ export const useCurrentSong = create<State & Actions>((set) => ({
   duration: 0,
   currentPos: 0,
   isPlaying: false,
+  volume: 0.5,
 
   setState: (update) => set((state) => ({ ...state, ...update })),
 }));

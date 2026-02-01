@@ -3,6 +3,8 @@ import { PlayerSong } from "@/components/Player/PlayerSong/PlayerSong";
 import { SongDuration } from "@/components/Player/SongDuration/SongDuration";
 import { SongProgress } from "@/components/Player/SongProgress/SongProgress";
 import { SongTimeElapsed } from "@/components/Player/SongTimeElapsed/SongTimeElapsed";
+import { VolumeSlider } from "@/components/Player/VolumeSlider/VolumeSlider";
+import { Volume } from "lucide-react";
 
 export const Player = () => {
   return (
@@ -18,6 +20,14 @@ export const Player = () => {
           <SongTimeElapsed />
           <SongProgress />
           <SongDuration />
+        </div>
+      </div>
+      <div className="flex justify-end items-center">
+        <div className="flex min-w-[40%] items-center">
+          <Volume size={20} />
+          <div className="flex-1">
+            <VolumeSlider />
+          </div>
         </div>
       </div>
     </>
