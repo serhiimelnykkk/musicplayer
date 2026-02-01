@@ -8,7 +8,7 @@ import { Volume } from "lucide-react";
 
 export const Player = () => {
   return (
-    <>
+    <div className="grid grid-cols-[30%_1fr_30%] gap-4 py-2 px-4 min-h-20 bg-neutral-950 text-neutral-100">
       <div className="flex gap-4">
         <PlayerSong />
       </div>
@@ -30,6 +30,6 @@ export const Player = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };

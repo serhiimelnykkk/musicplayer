@@ -12,13 +12,17 @@ export const PlayerSong = () => {
       : null;
   }, [currentSongId, songs]);
 
+  if (!currentSong) {
+    return null;
+  }
+
   return (
     <>
       <img
         src={currentSong?.albumCover}
         width={64}
         height={64}
-        alt=""
+        alt={`${currentSong && currentSong.title}'s album cover.`}
         className="rounded-sm"
       />
       <div className="flex flex-col">
