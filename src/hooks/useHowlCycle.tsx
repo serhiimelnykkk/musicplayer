@@ -83,6 +83,10 @@ export const useHowlCycle = () => {
       }
     });
 
+    howl.on("volume", () => {
+      setState({ volume: howl.volume() });
+    });
+
     return () => {
       howl.unload();
     };

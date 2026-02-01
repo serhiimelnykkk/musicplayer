@@ -1,10 +1,26 @@
+import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
+import { useCurrentSong } from "@/store";
 import { Range, Root as Slider, Thumb, Track } from "@radix-ui/react-slider";
 
 export const VolumeSlider = () => {
+  const volume = useCurrentSong((state) => state.volume);
+  const howlRef = useHowl();
+
+  const handleSliderChange = (value: number[]) => {
+    if (howlRef.current) {
+      howlRef.current.volume(value[0]);
+    }
+  };
+
   return (
     <>
       <Slider
-        defaultValue={[50]}
+        defaultValue={[volume]}
+        value={[volume]}
+        min={0}
+        max={1}
+        step={0.01}
+        onValueChange={(value) => handleSliderChange(value)}
         className="relative flex items-center h-1.5 group/root"
       >
         <Track className="relative flex-1 bg-neutral-600 h-full rounded-full">
