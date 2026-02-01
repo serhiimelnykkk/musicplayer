@@ -8,7 +8,7 @@ export const Main = () => {
   return (
     <main className="relative">
       <SongsList />
-      <div className="grid grid-cols-[30%_1fr_30%] gap-4 py-2 px-4 sticky bottom-0 left-0 right-0 bg-neutral-950 text-neutral-100">
+      <div className="sticky bottom-0 left-0 right-0 ">
         <Player />
       </div>
     </main>
