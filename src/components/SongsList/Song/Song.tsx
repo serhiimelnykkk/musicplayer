@@ -11,14 +11,17 @@ interface Props {
 }
 
 export const Song = memo(({ song }: Props) => {
-  const { currentSongId, isPlaying, setState } = useCurrentSong(
-    useShallow((state) => ({
-      currentSongId: state.currentSongId,
-      isPlaying: state.isPlaying,
-      setState: state.setState,
-    })),
+  const { isActive, isPlaying, setState } = useCurrentSong(
+    useShallow((state) => {
+      const isCurrent = state.currentSongId === song.id;
+
+      return {
+        isActive: isCurrent,
+        isPlaying: isCurrent ? state.isPlaying : false,
+        setState: state.setState,
+      };
+    }),
   );
-  const isActive = song.id === currentSongId;
 
   const howlRef = useHowl();
   const duration = durationToViewString(song.duration);
