@@ -67,9 +67,11 @@ export const useHowlCycle = () => {
       }
     });
 
-    // onEnd doesn't trigger when looping
-
     howl.on("end", () => {
+      if (howl.loop()) {
+        howl.play();
+        return;
+      }
       const currentSong = songs.find((song) => song.id === currentSongId);
       if (currentSong) {
         const currentSongIndex = songs.indexOf(currentSong);
