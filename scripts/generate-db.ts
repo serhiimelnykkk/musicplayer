@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import fs from "fs";
 import { parseFile } from "music-metadata";
+import path from "path";
 import { type Song } from "../src/types";
 
 const createSong = async (filePath: string): Promise<Song> => {
@@ -23,7 +24,7 @@ const createSong = async (filePath: string): Promise<Song> => {
 };
 
 const generateDb = async () => {
-  const songsFolderPath = "./public/music";
+  const songsFolderPath = path.join(process.cwd(), "public", "music");
   const songsPaths = fs.readdirSync(songsFolderPath);
 
   const promises = songsPaths.map((path) =>
