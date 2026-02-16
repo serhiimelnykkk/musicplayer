@@ -34,8 +34,9 @@ const generateDb = async () => {
   const songs = await Promise.all(promises);
 
   const db = { songs };
+  const outputPath = path.join(process.cwd(), "public", "db.json");
 
-  fs.writeFileSync("db.json", JSON.stringify(db, null, 2));
+  fs.writeFileSync(outputPath, JSON.stringify(db, null, 2));
 };
 
 generateDb();

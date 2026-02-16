@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const url = "db.json";
+const url = "/db.json";
 
 type ResponseType = {
   songs: Song[];
