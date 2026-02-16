@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run generate-db && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "generate-db": "tsx scripts/generate-db.ts",
