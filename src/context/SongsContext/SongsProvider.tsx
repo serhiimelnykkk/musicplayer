@@ -1,12 +1,16 @@
 import { SongsContext } from "@/context/SongsContext/SongsContext";
 import { type Song } from "@/types";
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 interface Props {
   children: React.ReactNode;
 }
 
-const url = "http://localhost:3000/songs";
+const url = "db.json";
+
+type ResponseType = {
+  songs: Song[];
+};
 
 export const SongsProvider = ({ children }: Props) => {
   const [songs, setSongs] = useState<Song[]>([]);
@@ -14,7 +18,7 @@ export const SongsProvider = ({ children }: Props) => {
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())
-      .then((data) => setSongs(data));
+      .then((data: ResponseType) => setSongs(data.songs));
   }, []);
 
   const value = useMemo(() => {
