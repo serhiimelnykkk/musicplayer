@@ -46,7 +46,7 @@ export const useHowlCycle = () => {
     howlRef.current = howl;
 
     const step = () => {
-      const currentStep = Math.floor(howlRef.current?.seek() || 0);
+      const currentStep = Math.floor(howl.seek() || 0);
       if (currentStep !== lastTimeRef.current) {
         setState({ currentPos: currentStep });
       }
