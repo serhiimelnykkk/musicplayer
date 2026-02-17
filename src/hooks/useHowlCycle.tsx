@@ -6,10 +6,11 @@ import { useEffect, useRef } from "react";
 import { useShallow } from "zustand/shallow";
 
 export const useHowlCycle = () => {
-  const { currentSongId, setState } = useCurrentSong(
+  const { currentSongId, setState, nextSong } = useCurrentSong(
     useShallow((state) => ({
       currentSongId: state.currentSongId,
       setState: state.setState,
+      nextSong: state.nextSong,
     })),
   );
 
@@ -75,19 +76,7 @@ export const useHowlCycle = () => {
         howl.play();
         return;
       }
-
-      const currentSong = songs.find((song) => song.id === currentSongId);
-
-      if (currentSong) {
-        const currentSongIndex = songs.indexOf(currentSong);
-        let nextSong = null;
-        if (currentSongIndex === songs.length - 1) {
-          nextSong = songs[0];
-        } else {
-          nextSong = songs[currentSongIndex + 1];
-        }
-        setState({ currentSongId: nextSong.id });
-      }
+      nextSong(songs);
     });
 
     howl.on("volume", () => {
@@ -100,5 +89,5 @@ export const useHowlCycle = () => {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [currentSongId, songs, setState]);
+  }, [currentSongId, songs, setState, howlRef, nextSong]);
 };
