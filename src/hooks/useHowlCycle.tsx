@@ -72,7 +72,9 @@ export const useHowlCycle = () => {
         howl.play();
         return;
       }
+
       const currentSong = songs.find((song) => song.id === currentSongId);
+
       if (currentSong) {
         const currentSongIndex = songs.indexOf(currentSong);
         let nextSong = null;
@@ -91,6 +93,9 @@ export const useHowlCycle = () => {
 
     return () => {
       howl.unload();
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
     };
   }, [currentSongId, songs, setState]);
 };
