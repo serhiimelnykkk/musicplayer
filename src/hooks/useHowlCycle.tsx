@@ -23,27 +23,42 @@ export const useHowlCycle = () => {
 
     const songPath = songs.filter((song) => song.id === currentSongId)[0]
       .filePath;
-
-    let howl = null;
+    const state = useCurrentSong.getState();
 
     const howlOptions: HowlOptions = {
       src: songPath,
       html5: true,
       volume: useCurrentSong.getState().volume,
+      loop: howlRef.current ? howlRef.current.loop() : false,
+
+      onload: () => {
+        howl.play();
+        state.onLoad();
+      },
+      onplay: () => {
+        state.onPlay(howl.duration());
+        rafRef.current = requestAnimationFrame(step);
+      },
+      onpause: () => {
+        state.onPause();
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+        }
+      },
+      onend: () => {
+        if (howl.loop()) {
+          return howl.play();
+        }
+        state.nextSong(songs);
+      },
+      onvolume: () => {
+        state.setVolume(howl.volume());
+      },
     };
 
-    if (howlRef.current) {
-      howl = new Howl({
-        ...howlOptions,
-        loop: howlRef.current.loop(),
-      });
-    } else {
-      howl = new Howl(howlOptions);
-    }
+    const howl = new Howl(howlOptions);
 
     howlRef.current = howl;
-
-    const state = useCurrentSong.getState();
 
     const step = () => {
       const currentStep = Math.floor(howl.seek() || 0);
@@ -53,34 +68,6 @@ export const useHowlCycle = () => {
       lastTimeRef.current = currentStep;
       rafRef.current = requestAnimationFrame(step);
     };
-
-    howl.once("load", () => {
-      howl.play();
-      state.onLoad();
-    });
-
-    howl.on("play", () => {
-      state.onPlay(howl.duration());
-      rafRef.current = requestAnimationFrame(step);
-    });
-
-    howl.on("pause", () => {
-      state.onPause();
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
-    });
-
-    howl.on("end", () => {
-      if (howl.loop()) {
-        return howl.play();
-      }
-      state.nextSong(songs);
-    });
-
-    howl.on("volume", () => {
-      state.setVolume(howl.volume());
-    });
 
     return () => {
       howl.unload();
