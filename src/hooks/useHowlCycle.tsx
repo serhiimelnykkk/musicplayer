@@ -3,14 +3,9 @@ import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useCurrentSong } from "@/store";
 import type { HowlOptions } from "howler";
 import { useEffect, useRef } from "react";
-import { useShallow } from "zustand/shallow";
 
 export const useHowlCycle = () => {
-  const { currentSongId } = useCurrentSong(
-    useShallow((state) => ({
-      currentSongId: state.currentSongId,
-    })),
-  );
+  const currentSongId = useCurrentSong((state) => state.currentSongId);
 
   const { songs } = useSongs();
 
