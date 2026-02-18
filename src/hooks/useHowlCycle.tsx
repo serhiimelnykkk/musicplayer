@@ -43,7 +43,7 @@ export const useHowlCycle = () => {
       },
       onend: () => {
         if (howl.loop()) {
-          return howl.play();
+          return howl.seek(0);
         }
         nextSong(songs);
       },
