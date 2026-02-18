@@ -12,6 +12,11 @@ interface State {
 interface Actions {
   setState(update: Partial<State>): void;
   nextSong(songs: Song[]): void;
+  onLoad: () => void;
+  onPlay: (duration: number) => void;
+  onPause: () => void;
+  setVolume: (volume: number) => void;
+  setPos: (pos: number) => void;
 }
 
 export const useCurrentSong = create<State & Actions>((set) => ({
@@ -21,6 +26,12 @@ export const useCurrentSong = create<State & Actions>((set) => ({
   isPlaying: false,
   volume: 0.5,
 
+  onLoad: () => set((state) => ({ ...state, currentPos: 0 })),
+  onPlay: (duration: number) =>
+    set((state) => ({ ...state, duration: duration, isPlaying: true })),
+  onPause: () => set((state) => ({ ...state, isPlaying: false })),
+  setVolume: (volume: number) => set((state) => ({ ...state, volume: volume })),
+  setPos: (pos: number) => set((state) => ({ ...state, currentPos: pos })),
   nextSong: (songs) =>
     set((state) => {
       const currentSong = songs.find((song) => song.id === state.currentSongId);

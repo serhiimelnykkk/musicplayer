@@ -6,11 +6,9 @@ import { useEffect, useRef } from "react";
 import { useShallow } from "zustand/shallow";
 
 export const useHowlCycle = () => {
-  const { currentSongId, setState, nextSong } = useCurrentSong(
+  const { currentSongId } = useCurrentSong(
     useShallow((state) => ({
       currentSongId: state.currentSongId,
-      setState: state.setState,
-      nextSong: state.nextSong,
     })),
   );
 
@@ -45,10 +43,12 @@ export const useHowlCycle = () => {
 
     howlRef.current = howl;
 
+    const state = useCurrentSong.getState();
+
     const step = () => {
       const currentStep = Math.floor(howl.seek() || 0);
       if (currentStep !== lastTimeRef.current) {
-        setState({ currentPos: currentStep });
+        state.setPos(currentStep);
       }
       lastTimeRef.current = currentStep;
       rafRef.current = requestAnimationFrame(step);
@@ -56,16 +56,16 @@ export const useHowlCycle = () => {
 
     howl.once("load", () => {
       howl.play();
-      setState({ currentPos: 0 });
+      state.onLoad();
     });
 
     howl.on("play", () => {
-      setState({ duration: howl.duration(), isPlaying: true });
+      state.onPlay(howl.duration());
       rafRef.current = requestAnimationFrame(step);
     });
 
     howl.on("pause", () => {
-      setState({ isPlaying: false });
+      state.onPause();
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
       }
@@ -73,14 +73,13 @@ export const useHowlCycle = () => {
 
     howl.on("end", () => {
       if (howl.loop()) {
-        howl.play();
-        return;
+        return howl.play();
       }
-      nextSong(songs);
+      state.nextSong(songs);
     });
 
     howl.on("volume", () => {
-      setState({ volume: howl.volume() });
+      state.setVolume(howl.volume());
     });
 
     return () => {
@@ -89,5 +88,5 @@ export const useHowlCycle = () => {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [currentSongId, songs, setState, howlRef, nextSong]);
+  }, [currentSongId, songs, howlRef]);
 };
