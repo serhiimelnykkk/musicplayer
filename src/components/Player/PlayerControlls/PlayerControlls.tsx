@@ -1,6 +1,6 @@
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
-import { useCurrentSong } from "@/store";
+import { useCurrentSong } from "@/store/currentSongStore";
 import { Pause, Play, Repeat, SkipBack, SkipForward } from "lucide-react";
 import { useState } from "react";
 import { useShallow } from "zustand/shallow";

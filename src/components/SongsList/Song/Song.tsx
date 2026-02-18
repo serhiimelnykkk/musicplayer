@@ -1,5 +1,5 @@
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
-import { useCurrentSong } from "@/store";
+import { useCurrentSong } from "@/store/currentSongStore";
 import { type Song as SongType } from "@/types";
 import { durationToViewString } from "@/util";
 import { Pause, Play } from "lucide-react";
