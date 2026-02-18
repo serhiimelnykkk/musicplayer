@@ -18,7 +18,8 @@ export const useHowlCycle = () => {
 
     const songPath = songs.filter((song) => song.id === currentSongId)[0]
       .filePath;
-    const state = useCurrentSong.getState();
+    const { onLoad, onPause, onPlay, setVolume, setPos, nextSong } =
+      useCurrentSong.getState();
 
     const howlOptions: HowlOptions = {
       src: songPath,
@@ -28,14 +29,14 @@ export const useHowlCycle = () => {
 
       onload: () => {
         howl.play();
-        state.onLoad();
+        onLoad();
       },
       onplay: () => {
-        state.onPlay(howl.duration());
+        onPlay(howl.duration());
         rafRef.current = requestAnimationFrame(step);
       },
       onpause: () => {
-        state.onPause();
+        onPause();
         if (rafRef.current) {
           cancelAnimationFrame(rafRef.current);
         }
@@ -44,10 +45,10 @@ export const useHowlCycle = () => {
         if (howl.loop()) {
           return howl.play();
         }
-        state.nextSong(songs);
+        nextSong(songs);
       },
       onvolume: () => {
-        state.setVolume(howl.volume());
+        setVolume(howl.volume());
       },
     };
 
@@ -58,7 +59,7 @@ export const useHowlCycle = () => {
     const step = () => {
       const currentStep = Math.floor(howl.seek() || 0);
       if (currentStep !== lastTimeRef.current) {
-        state.setPos(currentStep);
+        setPos(currentStep);
       }
       lastTimeRef.current = currentStep;
       rafRef.current = requestAnimationFrame(step);
