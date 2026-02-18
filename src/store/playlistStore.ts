@@ -2,8 +2,9 @@ import type { Song } from "@/types";
 import { create } from "zustand";
 
 interface Playlist {
+id: string;
   name: string;
-  songs: Song["id"][];
+  songIds: Set<Song["id"]>;
 }
 
 interface State {
