@@ -1,9 +1,9 @@
 import { Player } from "@/components/Player/Player";
 import { SongsList } from "@/components/SongsList/SongsList";
-import { useHowlCycle } from "@/hooks/useHowlCycle";
+import { useHowlLoop } from "@/hooks/useHowlCycle";
 
 export const Main = () => {
-  useHowlCycle();
+  useHowlLoop();
 
   return (
     <main className="relative">

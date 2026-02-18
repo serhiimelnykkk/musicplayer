@@ -4,7 +4,7 @@ import { useCurrentSong } from "@/store";
 import type { HowlOptions } from "howler";
 import { useEffect } from "react";
 
-export const useHowlCycle = () => {
+export const useHowlLoop = () => {
   const currentSongId = useCurrentSong((state) => state.currentSongId);
 
   const { songs } = useSongs();
