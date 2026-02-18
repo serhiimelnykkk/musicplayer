@@ -2,7 +2,7 @@ import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useCurrentSong } from "@/store";
 import type { HowlOptions } from "howler";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 export const useHowlCycle = () => {
   const currentSongId = useCurrentSong((state) => state.currentSongId);
@@ -10,11 +10,12 @@ export const useHowlCycle = () => {
   const { songs } = useSongs();
 
   const howlRef = useHowl();
-  const lastTimeRef = useRef(0);
-  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!currentSongId) return;
+
+    let rafId: number | null = null;
+    let lastTimeRef: number | null = null;
 
     const songPath = songs.filter((song) => song.id === currentSongId)[0]
       .filePath;
@@ -33,12 +34,12 @@ export const useHowlCycle = () => {
       },
       onplay: () => {
         onPlay(howl.duration());
-        rafRef.current = requestAnimationFrame(step);
+        rafId = requestAnimationFrame(step);
       },
       onpause: () => {
         onPause();
-        if (rafRef.current) {
-          cancelAnimationFrame(rafRef.current);
+        if (rafId) {
+          cancelAnimationFrame(rafId);
         }
       },
       onend: () => {
@@ -58,17 +59,17 @@ export const useHowlCycle = () => {
 
     const step = () => {
       const currentStep = Math.floor(howl.seek() || 0);
-      if (currentStep !== lastTimeRef.current) {
+      if (currentStep !== lastTimeRef) {
         setPos(currentStep);
       }
-      lastTimeRef.current = currentStep;
-      rafRef.current = requestAnimationFrame(step);
+      lastTimeRef = currentStep;
+      rafId = requestAnimationFrame(step);
     };
 
     return () => {
       howl.unload();
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
       }
     };
   }, [currentSongId, songs, howlRef]);
