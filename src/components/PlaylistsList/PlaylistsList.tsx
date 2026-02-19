@@ -1,4 +1,5 @@
 import { usePlaylists } from "@/store/playlistStore";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Close,
   Content,
@@ -11,11 +12,14 @@ import {
 import { X as CloseIcon } from "lucide-react";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import z from "zod";
 import { useShallow } from "zustand/shallow";
 
 interface Inputs {
   playlistName: string;
 }
+
+const Playlist = z.object({ playlistName: z.string().min(3).max(128) });
 
 export const PlaylistsList = () => {
   const { playlists, createPlaylist } = usePlaylists(
@@ -25,7 +29,16 @@ export const PlaylistsList = () => {
     })),
   );
 
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>({
+    resolver: async (data, context, options) => {
+      console.log("formData", data);
+      console.log(
+        "validation result",
+        await zodResolver(Playlist)(data, context, options),
+      );
+      return zodResolver(Playlist)(data, context, options);
+    },
+  });
 
   const onSubmit: SubmitHandler<Inputs> = (data) =>
     createPlaylist(data.playlistName);
