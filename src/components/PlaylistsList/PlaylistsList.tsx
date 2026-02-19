@@ -7,7 +7,7 @@ export const PlaylistsList = () => {
   return (
     <ul>
       {playlists.map((playlist) => (
-        <li>{playlist.name}</li>
+        <li key={playlist.id}>{playlist.name}</li>
       ))}
       <PlaylistCreationDialog />
     </ul>
