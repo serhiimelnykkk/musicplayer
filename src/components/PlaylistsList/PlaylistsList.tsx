@@ -28,14 +28,7 @@ export const PlaylistsList = () => {
   );
 
   const { register, handleSubmit } = useForm<Inputs>({
-    resolver: async (data, context, options) => {
-      console.log("formData", data);
-      console.log(
-        "validation result",
-        await zodResolver(Playlist)(data, context, options),
-      );
-      return zodResolver(Playlist)(data, context, options);
-    },
+    resolver: zodResolver(Playlist),
   });
 
   const onSubmit: SubmitHandler<Inputs> = (data) =>
