@@ -15,11 +15,9 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import z from "zod";
 import { useShallow } from "zustand/shallow";
 
-interface Inputs {
-  playlistName: string;
-}
-
 const Playlist = z.object({ playlistName: z.string().min(3).max(128) });
+
+type Inputs = z.infer<typeof Playlist>;
 
 export const PlaylistsList = () => {
   const { playlists, createPlaylist } = usePlaylists(
