@@ -24,7 +24,7 @@ export const PlaylistCreationDialog = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleOpenChange}>
-      <Trigger>
+      <Trigger asChild>
         <button>Add playlist</button>
       </Trigger>
       <Portal>
