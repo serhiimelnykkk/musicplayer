@@ -29,8 +29,8 @@ export const PlaylistCreationDialog = () => {
       </Trigger>
       <Portal>
         <Overlay className="fixed inset-0 bg-black/50" />
+        {hasOpened && <DialogContent />}
       </Portal>
-      {hasOpened && <DialogContent />}
     </Dialog>
   );
 };
