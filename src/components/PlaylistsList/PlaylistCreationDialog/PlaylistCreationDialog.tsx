@@ -5,7 +5,7 @@ import {
   Trigger,
 } from "@radix-ui/react-dialog";
 
-import { DialogContent } from "@radix-ui/react-dialog";
+import { DialogContent } from "@/components/PlaylistsList/PlaylistCreationDialog/DialogContent/DialogContent";
 import { useState } from "react";
 
 export const PlaylistCreationDialog = () => {
