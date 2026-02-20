@@ -5,7 +5,7 @@ export const SongsList = () => {
   const { songs } = useSongs();
 
   return (
-    <ul className="list-none">
+    <ul>
       {songs.map((song) => (
         <Song key={song.id} song={song} />
       ))}

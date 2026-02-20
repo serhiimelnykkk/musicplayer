@@ -5,7 +5,7 @@ export const PlaylistsList = () => {
   const playlists = usePlaylists((state) => state.playlists);
 
   return (
-    <ul>
+    <ul className="bg-neutral-900 text-neutral-100">
       {playlists.map((playlist) => (
         <li key={playlist.id}>{playlist.name}</li>
       ))}

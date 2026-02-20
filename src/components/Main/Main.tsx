@@ -7,12 +7,14 @@ export const Main = () => {
   useHowlLoop();
 
   return (
-    <main className="relative">
-      <SongsList />
-      <div className="sticky bottom-0 left-0 right-0 ">
-        <Player />
-      </div>
+    <main className="relative grid grid-cols-[20%_1fr] h-dvh">
       <PlaylistsList />
+      <div className="overflow-y-scroll h-full">
+        <SongsList />
+        <div className="sticky bottom-0 left-0 right-0">
+          <Player />
+        </div>
+      </div>
     </main>
   );
 };
