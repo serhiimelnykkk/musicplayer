@@ -22,7 +22,9 @@ export const PlaylistsList = () => {
               <span className="group-hover:text-neutral-100 text-sm text-neutral-500">
                 {index + 1}
               </span>
-              <span>{playlist.name}</span>
+              <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+                {playlist.name}
+              </span>
             </li>
           ))}
         </ul>
