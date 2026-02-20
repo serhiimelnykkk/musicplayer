@@ -14,12 +14,15 @@ export const PlaylistsList = () => {
           </div>
         </div>
         <ul className="flex flex-col">
-          {playlists.map((playlist) => (
+          {playlists.map((playlist, index) => (
             <li
               key={playlist.id}
-              className="px-4 py-2 hover:bg-neutral-600 rounded-sm cursor-pointer"
+              className="group px-4 py-2 hover:bg-neutral-600 rounded-sm cursor-pointer grid grid-cols-[1.5rem_1fr] items-center"
             >
-              {playlist.name}
+              <span className="group-hover:text-neutral-100 text-sm text-neutral-500">
+                {index + 1}
+              </span>
+              <span>{playlist.name}</span>
             </li>
           ))}
         </ul>
