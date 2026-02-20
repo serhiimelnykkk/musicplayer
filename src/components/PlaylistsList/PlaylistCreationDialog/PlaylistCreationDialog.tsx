@@ -4,6 +4,7 @@ import {
   Portal,
   Trigger,
 } from "@radix-ui/react-dialog";
+import { Plus } from "lucide-react";
 
 import { lazy, useState } from "react";
 
@@ -25,7 +26,10 @@ export const PlaylistCreationDialog = () => {
   return (
     <Dialog open={isModalOpen} onOpenChange={handleOpenChange}>
       <Trigger asChild>
-        <button>Add playlist</button>
+        <button className="hover:outline-green-500 hover:outline-2 bg-green-800 padding flex items-center justify-between px-2 py-1 rounded-sm">
+          <span className="text-bold text-lg">New playlist</span>
+          <Plus />
+        </button>
       </Trigger>
       <Portal>
         <Overlay className="fixed inset-0 bg-black/50" />

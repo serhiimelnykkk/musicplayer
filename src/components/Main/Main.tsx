@@ -8,7 +8,9 @@ export const Main = () => {
 
   return (
     <main className="relative grid grid-cols-[20%_1fr] h-dvh">
-      <PlaylistsList />
+      <div className="overflow-y-auto h-full p-4 border-r border-neutral-600 bg-neutral-900 text-neutral-100">
+        <PlaylistsList />
+      </div>
       <div className="overflow-y-scroll h-full">
         <SongsList />
         <div className="sticky bottom-0 left-0 right-0">

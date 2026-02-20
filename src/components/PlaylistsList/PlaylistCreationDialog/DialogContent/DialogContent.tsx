@@ -22,7 +22,10 @@ export const DialogContent = () => {
 
   return (
     <Content className="p-4 flex flex-col text-neutral-100 fixed left-1/2 top-1/2 w-[90vw] max-w-md border border-neutral-700 rounded-sm max-h-64 bg-neutral-800 -translate-[50%]">
-      <Close className="absolute right-1 top-1 hover:text-red-400 transition-colors duration-200">
+      <Close
+        asChild
+        className="absolute right-1 top-1 hover:text-red-400 transition-colors duration-200"
+      >
         <button>
           <CloseIcon size={20} />
         </button>
@@ -40,7 +43,7 @@ export const DialogContent = () => {
         </div>
         <button
           type="submit"
-          className="font-bold px-4 py-2 bg-green-800 rounded-sm self-end"
+          className="font-bold px-4 py-2 bg-green-800 rounded-sm self-end hover:outline-green-500 hover:outline-2"
         >
           Create playlist
         </button>
