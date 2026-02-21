@@ -32,20 +32,23 @@ export const usePlaylists = create<State & Actions>((set) => ({
     }),
   addSong: (playlistId: Playlist["id"], songId: Song["id"]) =>
     set((state) => {
-      const playlist = state.playlists.find(
+      const updatedPlaylist = state.playlists.find(
         (playlist) => playlist.id === playlistId,
       );
 
-      if (!playlist) {
+      if (!updatedPlaylist) {
         return state;
       }
 
-      playlist.songIds.add(songId);
+      updatedPlaylist.songIds.add(songId);
       const playlists = state.playlists;
-      const updatedPlaylists = playlists.filter(
-        (playlist) => playlist.id === playlistId,
-      );
-      updatedPlaylists.push(playlist);
+      const updatedPlaylists = playlists.map((playlist) => {
+        if (playlist.id === playlistId) {
+          return updatedPlaylist;
+        } else {
+          return playlist;
+        }
+      });
 
       return { ...state, playlists: updatedPlaylists };
     }),
