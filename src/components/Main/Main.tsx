@@ -1,6 +1,6 @@
 import { Player } from "@/components/Player/Player";
 import { PlaylistsList } from "@/components/PlaylistsList/PlaylistsList";
-import { SongsList } from "@/components/SongsList/SongsList";
+import { DialogRoot } from "@/components/SongsList/Dialog/DialogRoot";
 import { useHowlLoop } from "@/hooks/useHowlCycle";
 
 export const Main = () => {
@@ -12,7 +12,7 @@ export const Main = () => {
         <PlaylistsList />
       </div>
       <div className="overflow-y-scroll h-full">
-        <SongsList />
+        <DialogRoot />
         <div className="sticky bottom-0 left-0 right-0">
           <Player />
         </div>

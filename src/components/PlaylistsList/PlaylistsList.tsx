@@ -9,9 +9,7 @@ export const PlaylistsList = () => {
       <div className="flex flex-col gap-4">
         <div className="flex gap-4 justify-between">
           <h3 className="text-xl font-bold">Playlists</h3>
-          <div className="">
-            <PlaylistCreationDialog />
-          </div>
+          <PlaylistCreationDialog />
         </div>
         <ul className="flex flex-col">
           {playlists.map((playlist, index) => (

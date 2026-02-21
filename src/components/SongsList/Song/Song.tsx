@@ -1,5 +1,6 @@
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
 import { useCurrentSong } from "@/store/currentSongStore";
+import { useSongDialog } from "@/store/songDialogStore";
 import { type Song as SongType } from "@/types";
 import { durationToViewString } from "@/util";
 import { Pause, Play, PlusCircle } from "lucide-react";
@@ -38,6 +39,11 @@ export const Song = memo(({ song }: Props) => {
     setState({ currentSongId: song.id });
   };
 
+  const handleAddToPlaylistClick = () => {
+    useSongDialog.getState().setSongId(song.id);
+    useSongDialog.getState().setIsOpen(true);
+  };
+
   return (
     <li
       className={`flex group font-semibold gap-4 p-4 bg-neutral-900 text-neutral-100 border-b border-neutral-700`}
@@ -70,7 +76,10 @@ export const Song = memo(({ song }: Props) => {
         <span>{song.genre}</span>
         <div className="justify-self-end flex items-center gap-4">
           <span>{duration}</span>
-          <button className="hover:text-green-600 transition-colors duration-200">
+          <button
+            onClick={() => handleAddToPlaylistClick()}
+            className="hover:text-green-600 transition-colors duration-200"
+          >
             <PlusCircle />
           </button>
         </div>
