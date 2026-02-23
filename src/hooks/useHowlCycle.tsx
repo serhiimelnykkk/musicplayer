@@ -1,6 +1,7 @@
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useCurrentSong } from "@/store";
+import type { HowlOptions } from "howler";
 import { useEffect, useRef } from "react";
 import { useShallow } from "zustand/shallow";
 
@@ -26,17 +27,19 @@ export const useHowlCycle = () => {
 
     let howl = null;
 
+    const howlOptions: HowlOptions = {
+      src: songPath,
+      html5: true,
+      volume: useCurrentSong.getState().volume,
+    };
+
     if (howlRef.current) {
       howl = new Howl({
-        src: songPath,
-        html5: true,
+        ...howlOptions,
         loop: howlRef.current.loop(),
       });
     } else {
-      howl = new Howl({
-        src: songPath,
-        html5: true,
-      });
+      howl = new Howl(howlOptions);
     }
 
     howlRef.current = howl;
