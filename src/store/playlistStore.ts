@@ -1,11 +1,5 @@
-import type { Song } from "@/types";
+import type { Playlist, Song } from "@/types";
 import { create } from "zustand";
-
-interface Playlist {
-  id: string;
-  name: string;
-  songIds: Set<Song["id"]>;
-}
 
 interface State {
   playlists: Playlist[];

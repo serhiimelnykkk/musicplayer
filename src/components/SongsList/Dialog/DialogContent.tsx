@@ -1,23 +1,18 @@
 import { PlaylistsDropdown } from "@/components/SongsList/Dialog/PlaylistsDropdown/PlaylistsDropdown";
 import { usePlaylists } from "@/store/playlistStore";
 import { useSongDialog } from "@/store/songDialogStore";
+import type { Playlist } from "@/types";
 import { Close, Content, Title } from "@radix-ui/react-dialog";
 import { X as CloseIcon } from "lucide-react";
 import { useState } from "react";
-import { useShallow } from "zustand/shallow";
 
 export const DialogContent = () => {
   const songId = useSongDialog((state) => state.songId);
 
-  const { playlists, addSong } = usePlaylists(
-    useShallow((state) => ({
-      playlists: state.playlists,
-      addSong: state.addSong,
-    })),
-  );
+  const addSong = usePlaylists((state) => state.addSong);
 
   const [checkedPlaylistIds, setCheckedPlaylistIds] = useState<
-    (typeof playlists)[number]["id"][]
+    Playlist["id"][]
   >([]);
 
   const handleFormSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
@@ -30,7 +25,7 @@ export const DialogContent = () => {
 
   const handleCheckedChange = (
     checked: boolean,
-    playlistId: (typeof playlists)[number]["id"],
+    playlistId: Playlist["id"],
   ) => {
     if (checked) {
       setCheckedPlaylistIds((prev) => [...prev, playlistId]);
