@@ -12,19 +12,23 @@ export const PlaylistsList = () => {
           <PlaylistCreationDialog />
         </div>
         <ul className="flex flex-col">
-          {playlists.map((playlist, index) => (
-            <li
-              key={playlist.id}
-              className="group px-4 py-2 hover:bg-neutral-600 rounded-sm cursor-pointer grid grid-cols-[1.5rem_1fr] items-center"
-            >
-              <span className="group-hover:text-neutral-100 text-sm text-neutral-500">
-                {index + 1}
-              </span>
-              <span className="whitespace-nowrap overflow-hidden text-ellipsis">
-                {playlist.name}
-              </span>
-            </li>
-          ))}
+          {playlists.length ? (
+            playlists.map((playlist, index) => (
+              <li
+                key={playlist.id}
+                className="group px-4 py-2 hover:bg-neutral-600 rounded-sm cursor-pointer grid grid-cols-[1.5rem_1fr] items-center"
+              >
+                <span className="group-hover:text-neutral-100 text-sm text-neutral-500">
+                  {index + 1}
+                </span>
+                <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+                  {playlist.name}
+                </span>
+              </li>
+            ))
+          ) : (
+            <span>No playlists found.</span>
+          )}
         </ul>
       </div>
     </>

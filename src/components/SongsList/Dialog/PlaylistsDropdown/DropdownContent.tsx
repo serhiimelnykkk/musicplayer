@@ -31,20 +31,24 @@ export const DropdownContent = () => {
       <ScrollArea className="h-[225px] w-[200px] overflow-hidden rounded text-neutral-100">
         <Viewport className="size-full rounded">
           <div className="flex flex-col gap-2">
-            {playlists.map((playlist) => (
-              <div key={playlist.id}>
-                <CheckboxItem
-                  className="data-[state=checked]:bg-neutral-600 transition-colors duration-200 hover:bg-neutral-800 rounded-sm px-2 py-1 cursor-pointer"
-                  checked={checkedPlaylistIds.includes(playlist.id)}
-                  onCheckedChange={(checked) =>
-                    setChecked(checked, playlist.id)
-                  }
-                  onSelect={(event) => event.preventDefault()}
-                >
-                  <Label>{playlist.name}</Label>
-                </CheckboxItem>
-              </div>
-            ))}
+            {playlists.length > 0 ? (
+              playlists.map((playlist) => (
+                <div key={playlist.id}>
+                  <CheckboxItem
+                    className="data-[state=checked]:bg-neutral-600 transition-colors duration-200 hover:bg-neutral-800 rounded-sm px-2 py-1 cursor-pointer"
+                    checked={checkedPlaylistIds.includes(playlist.id)}
+                    onCheckedChange={(checked) =>
+                      setChecked(checked, playlist.id)
+                    }
+                    onSelect={(event) => event.preventDefault()}
+                  >
+                    <Label>{playlist.name}</Label>
+                  </CheckboxItem>
+                </div>
+              ))
+            ) : (
+              <span className="self-center">No playlists found.</span>
+            )}
           </div>
         </Viewport>
         <Scrollbar>
