@@ -1,19 +1,9 @@
-import { usePlaylists } from "@/store/playlistStore";
+import { DropdownContent } from "@/components/SongsList/Dialog/PlaylistsDropdown/DropdownContent";
 import {
-  CheckboxItem,
-  Content as DropdownContent,
   Root as DropdownMenu,
-  Portal as DropdownPortal,
-  Trigger as DropdownTrigger,
-  Label,
+  Portal,
+  Trigger,
 } from "@radix-ui/react-dropdown-menu";
-import {
-  Root as ScrollArea,
-  Scrollbar,
-  Thumb,
-  Viewport,
-} from "@radix-ui/react-scroll-area";
-import { useShallow } from "zustand/shallow";
 
 interface Props {
   checkedPlaylistIds: string[];
@@ -24,51 +14,19 @@ export const PlaylistsDropdown = ({
   checkedPlaylistIds,
   handleCheckedChange,
 }: Props) => {
-  const { playlists } = usePlaylists(
-    useShallow((state) => ({
-      playlists: state.playlists,
-      addSong: state.addSong,
-    })),
-  );
-
   return (
     <DropdownMenu>
-      <DropdownTrigger asChild>
+      <Trigger asChild>
         <button className="border-2 border-neutral-700 rounded-sm p-2 text-sm">
           Playlists
         </button>
-      </DropdownTrigger>
-
-      <DropdownPortal>
+      </Trigger>
+      <Portal>
         <DropdownContent
-          sideOffset={12}
-          className="min-w-[220px] rounded-md bg-neutral-900 p-4"
-        >
-          <ScrollArea className="h-[225px] w-[200px] overflow-hidden rounded text-neutral-100">
-            <Viewport className="size-full rounded">
-              <div className="flex flex-col gap-2">
-                {playlists.map((playlist) => (
-                  <div key={playlist.id}>
-                    <CheckboxItem
-                      className="data-[state=checked]:bg-neutral-600 transition-colors duration-200 hover:bg-neutral-800 rounded-sm px-2 py-1 cursor-pointer"
-                      checked={checkedPlaylistIds.includes(playlist.id)}
-                      onCheckedChange={(checked) =>
-                        handleCheckedChange(checked, playlist.id)
-                      }
-                      onSelect={(event) => event.preventDefault()}
-                    >
-                      <Label>{playlist.name}</Label>
-                    </CheckboxItem>
-                  </div>
-                ))}
-              </div>
-            </Viewport>
-            <Scrollbar>
-              <Thumb />
-            </Scrollbar>
-          </ScrollArea>
-        </DropdownContent>
-      </DropdownPortal>
+          checkedPlaylistIds={checkedPlaylistIds}
+          handleCheckedChange={handleCheckedChange}
+        />
+      </Portal>
     </DropdownMenu>
   );
 };
