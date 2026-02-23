@@ -10,7 +10,7 @@ interface Actions {
   setState(update: Partial<State>): void;
   addSong: (playlistId: Playlist["id"], songId: Song["id"]) => void;
   createPlaylist: (name?: Playlist["name"]) => void;
-  setCurrentPlaylistId: (id: Playlist["id"]) => void;
+  setCurrentPlaylistId: (id: Playlist["id"] | null) => void;
 }
 
 const initialState: State = { currentPlaylistId: null, playlists: [] };

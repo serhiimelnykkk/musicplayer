@@ -18,12 +18,22 @@ export const PlaylistsList = () => {
           <PlaylistCreationDialog />
         </div>
         <ul className="flex flex-col">
+          <li className="group px-4 py-2 hover:bg-neutral-600 rounded-sm cursor-pointer">
+            <button onClick={() => setCurrentPlaylistId(null)}>
+              <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+                All Songs
+              </span>
+            </button>
+          </li>
           {playlists.length ? (
             playlists.map((playlist, index) => (
-              <li key={playlist.id}>
+              <li
+                key={playlist.id}
+                className="group px-4 py-2 hover:bg-neutral-600 rounded-sm cursor-pointer"
+              >
                 <button
-                  className="group px-4 py-2 hover:bg-neutral-600 rounded-sm cursor-pointer grid grid-cols-[1.5rem_1fr] items-center"
                   onClick={() => setCurrentPlaylistId(playlist.id)}
+                  className="grid grid-cols-[1.5rem_1fr] items-center"
                 >
                   <span className="group-hover:text-neutral-100 text-sm text-neutral-500">
                     {index + 1}
