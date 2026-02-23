@@ -4,8 +4,6 @@ import { parseFile } from "music-metadata";
 import path from "path";
 import { type Song } from "../src/types";
 
-// scripts/generate-db.ts
-
 const createSong = async (
   songsFolderPath: string,
   fileName: string,
