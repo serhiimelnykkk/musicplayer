@@ -14,6 +14,8 @@ export const SongsList = () => {
       : null,
   );
 
+  console.log(playlist);
+
   const songsToRender = useMemo(
     () => (playlist ? songs.filter((song) => playlist.has(song.id)) : songs),
     [playlist, songs],
