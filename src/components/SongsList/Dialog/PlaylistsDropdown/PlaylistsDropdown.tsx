@@ -5,15 +5,7 @@ import {
   Trigger,
 } from "@radix-ui/react-dropdown-menu";
 
-interface Props {
-  checkedPlaylistIds: string[];
-  handleCheckedChange: (checked: boolean, playlistId: string) => void;
-}
-
-export const PlaylistsDropdown = ({
-  checkedPlaylistIds,
-  handleCheckedChange,
-}: Props) => {
+export const PlaylistsDropdown = () => {
   return (
     <DropdownMenu>
       <Trigger asChild>
@@ -22,10 +14,7 @@ export const PlaylistsDropdown = ({
         </button>
       </Trigger>
       <Portal>
-        <DropdownContent
-          checkedPlaylistIds={checkedPlaylistIds}
-          handleCheckedChange={handleCheckedChange}
-        />
+        <DropdownContent />
       </Portal>
     </DropdownMenu>
   );

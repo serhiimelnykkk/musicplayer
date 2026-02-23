@@ -1,4 +1,5 @@
 import { usePlaylists } from "@/store/playlistStore";
+import { useSongDialog } from "@/store/songDialogStore";
 import { CheckboxItem, Content, Label } from "@radix-ui/react-dropdown-menu";
 import {
   Root as ScrollArea,
@@ -7,15 +8,8 @@ import {
   Viewport,
 } from "@radix-ui/react-scroll-area";
 import { useShallow } from "zustand/shallow";
-interface Props {
-  checkedPlaylistIds: string[];
-  handleCheckedChange: (checked: boolean, playlistId: string) => void;
-}
 
-export const DropdownContent = ({
-  checkedPlaylistIds,
-  handleCheckedChange,
-}: Props) => {
+export const DropdownContent = () => {
   const { playlists } = usePlaylists(
     useShallow((state) => ({
       playlists: state.playlists,
@@ -23,6 +17,12 @@ export const DropdownContent = ({
     })),
   );
 
+  const { checkedPlaylistIds, setChecked } = useSongDialog(
+    useShallow((state) => ({
+      checkedPlaylistIds: state.checkedPlaylistIds,
+      setChecked: state.setChecked,
+    })),
+  );
   return (
     <Content
       sideOffset={12}
@@ -37,7 +37,7 @@ export const DropdownContent = ({
                   className="data-[state=checked]:bg-neutral-600 transition-colors duration-200 hover:bg-neutral-800 rounded-sm px-2 py-1 cursor-pointer"
                   checked={checkedPlaylistIds.includes(playlist.id)}
                   onCheckedChange={(checked) =>
-                    handleCheckedChange(checked, playlist.id)
+                    setChecked(checked, playlist.id)
                   }
                   onSelect={(event) => event.preventDefault()}
                 >
