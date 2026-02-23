@@ -1,5 +1,5 @@
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
-import { useCurrentSong } from "@/store";
+import { useCurrentSong } from "@/store/currentSongStore";
 import { Range, Root as Slider, Thumb, Track } from "@radix-ui/react-slider";
 
 export const VolumeSlider = () => {

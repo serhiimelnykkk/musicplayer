@@ -1,4 +1,4 @@
-import { useCurrentSong } from "@/store";
+import { useCurrentSong } from "@/store/currentSongStore";
 import { durationToViewString } from "@/util";
 
 export const SongTimeElapsed = () => {

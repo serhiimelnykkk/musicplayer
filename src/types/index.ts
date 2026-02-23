@@ -8,3 +8,9 @@ export interface Song {
   title: string;
   duration: number;
 }
+
+export interface Playlist {
+  id: string;
+  name: string;
+  songIds: Set<Song["id"]>;
+}

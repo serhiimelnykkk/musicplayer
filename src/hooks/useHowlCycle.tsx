@@ -1,6 +1,6 @@
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
 import { useSongs } from "@/context/SongsContext/SongsContext";
-import { useCurrentSong } from "@/store";
+import { useCurrentSong } from "@/store/currentSongStore";
 import type { HowlOptions } from "howler";
 import { useEffect } from "react";
 
