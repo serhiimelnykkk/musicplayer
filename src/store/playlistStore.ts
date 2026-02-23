@@ -3,15 +3,17 @@ import { create } from "zustand";
 
 interface State {
   playlists: Playlist[];
+  currentPlaylistId: Playlist["id"] | null;
 }
 
 interface Actions {
   setState(update: Partial<State>): void;
   addSong: (playlistId: Playlist["id"], songId: Song["id"]) => void;
   createPlaylist: (name?: Playlist["name"]) => void;
+  setCurrentPlaylistId: (id: Playlist["id"]) => void;
 }
 
-const initialState: State = { playlists: [] };
+const initialState: State = { currentPlaylistId: null, playlists: [] };
 
 export const usePlaylists = create<State & Actions>((set) => ({
   ...initialState,
@@ -47,4 +49,6 @@ export const usePlaylists = create<State & Actions>((set) => ({
       return { ...state, playlists: updatedPlaylists };
     }),
   setState: (update) => set((state) => ({ ...state, ...update })),
+  setCurrentPlaylistId: (id) =>
+    set((state) => ({ ...state, currentPlaylistId: id })),
 }));
