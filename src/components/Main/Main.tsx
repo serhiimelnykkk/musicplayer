@@ -1,7 +1,7 @@
 import { Player } from "@/components/Player/Player";
 import { PlaylistsList } from "@/components/PlaylistsList/PlaylistsList";
 import { DialogRoot } from "@/components/SongsList/Dialog/DialogRoot";
-import { useHowlLoop } from "@/hooks/useHowlCycle";
+import { useHowlLoop } from "@/hooks/useHowlLoop";
 
 export const Main = () => {
   useHowlLoop();
