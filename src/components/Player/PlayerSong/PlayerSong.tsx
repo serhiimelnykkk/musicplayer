@@ -1,9 +1,9 @@
-import { useSongs } from "@/context/SongsContext/SongsContext";
 import { useCurrentSong } from "@/store/currentSongStore";
+import { useSongs } from "@/store/songsStore";
 import { useMemo } from "react";
 
 export const PlayerSong = () => {
-  const { songs } = useSongs();
+  const songs = useSongs((state) => state.songs);
   const currentSongId = useCurrentSong((state) => state.currentSongId);
 
   const currentSong = useMemo(() => {

@@ -1,14 +1,22 @@
 import { HowlRefProvider } from "@/context/HowlRefContext/HowlRefProvider";
-import { SongsProvider } from "@/context/SongsContext/SongsProvider";
 
+import { getSongs } from "@/api";
 import { Main } from "@/components/Main/Main";
+import { useSongs } from "@/store/songsStore";
+import { useEffect } from "react";
 
 export const App = () => {
+  useEffect(() => {
+    async function fetchSongs() {
+      const songs = await getSongs();
+      useSongs.setState((state) => ({ ...state, songs: songs }));
+    }
+    fetchSongs();
+  }, []);
+
   return (
     <HowlRefProvider>
-      <SongsProvider>
-        <Main />
-      </SongsProvider>
+      <Main />
     </HowlRefProvider>
   );
 };

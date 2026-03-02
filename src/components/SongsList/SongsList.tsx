@@ -1,10 +1,11 @@
 import { Song } from "@/components/SongsList/Song/Song";
-import { useSongs } from "@/context/SongsContext/SongsContext";
+
 import { usePlaylists } from "@/store/playlistStore";
+import { useSongs } from "@/store/songsStore";
 import { useMemo } from "react";
 
 export const SongsList = () => {
-  const { songs } = useSongs();
+  const songs = useSongs((state) => state.songs);
 
   const playlist = usePlaylists((state) =>
     state.currentPlaylistId
