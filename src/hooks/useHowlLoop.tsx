@@ -1,13 +1,14 @@
 import { useHowl } from "@/context/HowlRefContext/HowlRefContext";
-import { useSongs } from "@/context/SongsContext/SongsContext";
+
 import { useCurrentSong } from "@/store/currentSongStore";
+import { useSongs } from "@/store/songsStore";
 import type { HowlOptions } from "howler";
 import { useEffect } from "react";
 
 export const useHowlLoop = () => {
   const currentSongId = useCurrentSong((state) => state.currentSongId);
 
-  const { songs } = useSongs();
+  const songs = useSongs((state) => state.songs);
 
   const howlRef = useHowl();
 
