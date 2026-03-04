@@ -26,13 +26,11 @@ export const SongProgress = () => {
 
   const handleValueChange = (value: number[]) => {
     setSliderValue(value[0]);
-    setIsDragging(true);
   };
 
   const handleValueCommit = (value: number[]) => {
     howlRef.current?.seek(value[0]);
     setState({ currentPos: value[0] });
-    setIsDragging(false);
   };
 
   return (
@@ -42,6 +40,8 @@ export const SongProgress = () => {
       value={[sliderValue]}
       onValueChange={(value) => handleValueChange(value)}
       onValueCommit={(value) => handleValueCommit(value)}
+      onPointerDown={() => setIsDragging(true)}
+      onPointerUp={() => setIsDragging(false)}
       className="relative flex items-center w-full h-1.5 group/root"
     >
       <Track className="relative flex-1 bg-neutral-600 h-full rounded-full">
