@@ -63,10 +63,10 @@ export const Song = memo(({ song }: Props) => {
           </div>
         </button>
       </div>
-      <div className="grid grid-cols-4 gap-4 flex-1 items-center">
+      <div className="grid grid-cols-4 gap-4 flex-1 items-center text-sm">
         <div className="flex flex-col self-stretch">
           <span
-            className={`${isActive ? "text-green-500" : "group-hover:text-teal-500"} transition-colors duration-200 text-lg flex-1 font-bold overflow-hidden whitespace-nowrap text-ellipsis`}
+            className={`${isActive ? "text-green-500" : "group-hover:text-teal-500"} text-base transition-colors duration-200 flex-1 font-bold overflow-hidden whitespace-nowrap text-ellipsis`}
           >
             {song.title}
           </span>
