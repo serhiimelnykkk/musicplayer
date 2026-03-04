@@ -46,15 +46,15 @@ export const Song = memo(({ song }: Props) => {
 
   return (
     <li
-      className={`flex group font-semibold gap-4 p-4 bg-neutral-900 text-neutral-100 border-b border-neutral-700`}
+      className={`flex group font-semibold gap-4 p-4 bg-neutral-900 text-neutral-100 border-b border-neutral-700 items-center`}
     >
-      <div className="size-16">
+      <div className="size-8">
         <button className="relative" onClick={handlePlayClick}>
           <img
             src={song.albumCover}
             alt={`${song.title}'s album cover`}
-            width={64}
-            height={64}
+            width={32}
+            height={32}
             className="object-cover rounded-sm"
             loading="lazy"
           />
