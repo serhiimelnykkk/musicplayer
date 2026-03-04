@@ -28,7 +28,11 @@ export const useCurrentSong = create<State & Actions>((set) => ({
 
   onLoad: () => set((state) => ({ ...state, currentPos: 0 })),
   onPlay: (duration: number) =>
-    set((state) => ({ ...state, duration: duration, isPlaying: true })),
+    set((state) => ({
+      ...state,
+      duration: duration,
+      isPlaying: true,
+    })),
   onPause: () => set((state) => ({ ...state, isPlaying: false })),
   setVolume: (volume: number) => set((state) => ({ ...state, volume: volume })),
   setPos: (pos: number) => set((state) => ({ ...state, currentPos: pos })),
