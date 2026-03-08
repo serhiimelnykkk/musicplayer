@@ -4,10 +4,9 @@ A modern, responsive web-based music player built with React and TypeScript. It 
 
 **Live Demo**
 
-[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](ВСТАВТЕ_ТУТ_ПОСИЛАННЯ_НА_VERCEL)
+[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://musicplayer-ten-rose.vercel.app/)
 
-![App Screenshot](LINK_TO_YOUR_SCREENSHOT_HERE)
-*(Add a screenshot of your player here. Put the image in your repo or use an external link)*
+[![App Screenshot](https://i.postimg.cc/FKnjPQmj/image.png)](https://postimg.cc/zLKbB6yB)
 
 ## 🚀 Features
 
