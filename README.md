@@ -31,7 +31,7 @@ A modern, responsive web-based music player built with React and TypeScript. It 
 
 This project helped me understand:
 - Managing complex global state (current track, isPlaying, volume, progress) without prop drilling.
-- Creating custom accessible UI components (sliders) instead of using default HTML inputs.
+- Using unstyled Radix UI primitives (sliders, modals, scroll views) instead of using default HTML inputs.
 
 ## 📦 How to Run Locally
 
