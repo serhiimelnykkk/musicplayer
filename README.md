@@ -44,7 +44,11 @@ git clone https://github.com/serhiimelnykkk/musicplayer.git
 ```bash
 npm install
 ```
-3. Start the development server:
+3. Generate DB:
+```bash
+npm run generate-db
+```
+4. Start the development server:
 ```bash
 npm run dev
 ```
