@@ -32,6 +32,7 @@ A modern, responsive web-based music player built with React and TypeScript. It 
 This project helped me understand:
 - Managing complex global state (current track, isPlaying, volume, progress) without prop drilling.
 - Using unstyled Radix UI primitives (sliders, modals, scroll views) instead of using default HTML inputs.
+- Using RAF loops to sync Howler.js state with UI state (progress bar moving as song is playing)
 
 ## 📦 How to Run Locally
 
