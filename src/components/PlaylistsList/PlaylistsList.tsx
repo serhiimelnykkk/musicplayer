@@ -13,8 +13,8 @@ export const PlaylistsList = () => {
   return (
     <>
       <div className="flex flex-col gap-4">
-        <div className="flex gap-4 justify-between">
-          <h3 className="text-xl font-bold">Playlists</h3>
+        <div className="flex flex-col gap-4 justify-between">
+          <h3 className="text-xl font-bold hidden md:block">Playlists</h3>
           <PlaylistCreationDialog />
         </div>
         <ul className="flex flex-col">
@@ -23,17 +23,17 @@ export const PlaylistsList = () => {
             className="group px-4 py-2 hover:bg-neutral-600 rounded-sm cursor-pointer"
           >
             <span className="whitespace-nowrap overflow-hidden text-ellipsis">
-              All Songs
+              All
             </span>
           </button>
           {playlists.length ? (
             playlists.map((playlist, index) => (
               <button
                 key={playlist.id}
-                className="grid grid-cols-[1.5rem_1fr] items-center group px-4 py-2 hover:bg-neutral-600 rounded-sm cursor-pointer"
+                className="grid grid-cols-1 md:grid-cols-[1.5rem_1fr] items-center group px-2 py-2 hover:bg-neutral-600 rounded-sm cursor-pointer"
                 onClick={() => setCurrentPlaylistId(playlist.id)}
               >
-                <span className="group-hover:text-neutral-100 text-sm text-neutral-500">
+                <span className="group-hover:text-neutral-100 text-sm text-neutral-500 hidden md:block">
                   {index + 1}
                 </span>
                 <span className="whitespace-nowrap overflow-hidden text-ellipsis">

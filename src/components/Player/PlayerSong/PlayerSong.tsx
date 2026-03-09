@@ -25,9 +25,11 @@ export const PlayerSong = () => {
         alt={`${currentSong && currentSong.title}'s album cover.`}
         className="rounded-sm"
       />
-      <div className="flex flex-col">
-        <span className="font-bold flex-1">{currentSong?.title}</span>
-        <span className="text-xs text-neutral-500">
+      <div className="flex flex-col overflow-hidden">
+        <span className="font-bold flex-1 overflow-hidden whitespace-nowrap text-ellipsis">
+          {currentSong?.title}
+        </span>
+        <span className="text-xs text-neutral-500 overflow-hidden whitespace-nowrap text-ellipsis">
           {currentSong?.artist} &middot; {currentSong?.albumName}
         </span>
       </div>
