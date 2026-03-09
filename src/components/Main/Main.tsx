@@ -8,7 +8,7 @@ export const Main = () => {
 
   return (
     <main className="relative h-dvh flex flex-col">
-      <div className="grid grid-cols-[20%_1fr] overflow-hidden">
+      <div className="grid grid-cols-[minmax(100px,20%)_1fr] overflow-hidden h-full">
         <div className="overflow-y-auto h-full p-4 border-r border-neutral-600 bg-neutral-900 text-neutral-100">
           <PlaylistsList />
         </div>
