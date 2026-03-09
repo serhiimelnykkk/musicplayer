@@ -23,7 +23,7 @@ A modern, responsive web-based music player built with React and TypeScript. It 
 
 - **Core:** React, TypeScript, Vite
 - **State Management:** Zustand
-- **Styling:** Tailwind CSS, Radix UI Primitives (Slider/Progress)
+- **Styling:** Tailwind CSS, Radix UI Primitives (sliders, modals, scroll views)
 - **Audio:** Howler.js
 - **Icons:** Lucide React
 
